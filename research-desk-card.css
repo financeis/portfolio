@@ -1,0 +1,12 @@
+.project-featured, .project-featured:last-child { margin: 16px -20px 8px; padding: 30px 20px 32px; border: 0; border-radius: 4px; background: var(--featured-surface); }
+.project-featured .project-content h3 { font-size: 19px; font-weight: 600; }
+.project-featured .project-type { margin: 0 0 6px; color: var(--green); font-size: 12px; font-weight: 600; }
+.project-logo-link { display: inline-block; margin: 18px 0 4px; vertical-align: top; }
+.project-logo-link img { display: block; width: 174px; max-width: 100%; height: auto; }
+.project-logo-link:hover { opacity: .8; }
+.project-logo-link:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; }
+.case-study-link { font-weight: 600; }
+.case-study-button { margin-right: 10px; margin-bottom: 10px; }
+@media (max-width: 600px) {
+  .project-featured, .project-featured:last-child { margin-inline: -10px; padding: 26px 10px 28px; gap: 10px; }
+}
