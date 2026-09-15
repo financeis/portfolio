@@ -50,7 +50,7 @@ const projects = {
                 cardTags: ['Research Architecture', 'Strategy Prototyping', 'Reproducible Backtesting']
             },
             7: {
-                date: '2026.05–09',
+                date: '2026.05',
                 title: 'Research Desk — 증권 리포트 분석 워크스페이스',
                 github: 'https://github.com/polarbear091919/telegram_report',
                 featured: true,
