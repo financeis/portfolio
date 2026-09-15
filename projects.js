@@ -3,7 +3,7 @@ const projects = {
             9: {
                 date: '2025.12',
                 title: 'Mini-Factory — 투자전략 실험을 위한 공통 파이프라인',
-                github: 'https://github.com/polarbear091919/MiraeAsset_Dec_17',
+                github: 'https://github.com/financeis/MiraeAsset_Dec_17',
                 categories: ['strategy', 'data'],
                 typeLabel: '투자전략 연구 · 공통 아키텍처 설계',
                 discipline: 'Reusable architecture & strategy research',
@@ -52,7 +52,7 @@ const projects = {
             7: {
                 date: '2026.05',
                 title: 'Research Desk — 증권 리포트 분석 워크스페이스',
-                github: 'https://github.com/polarbear091919/telegram_report',
+                github: 'https://github.com/financeis/telegram_report',
                 featured: true,
                 caseStudy: 'research-desk/index.html',
                 logo: 'research-desk/assets/research-desk-logo.png',
@@ -78,7 +78,7 @@ const projects = {
                 image: 'images/경기국면.png',
                 date: '2025.10',
                 title: '경기국면 탐지 기반 전술적 자산배분 전략 논문 구현',
-                github: 'https://github.com/polarbear091919/Seminar_final',
+                github: 'https://github.com/financeis/Seminar_final',
                 desc: 'FRED-MD 거시경제 데이터를 활용한 2단계 경기국면 분류 및 자산배분 전략. PCA 기반 차원 축소 후 K-means 클러스터링으로 국면을 탐지하고, Markov Chain 예측과 Ridge 회귀를 결합한 TAA 모델.',
                 highlights: [
                     'Daniel Cunha Oliveira et al.(2025)의 연구 방법론 기반',
@@ -95,7 +95,7 @@ const projects = {
                 image: 'images/10k.webp',
                 date: '2025.09',
                 title: '10-K Report 기반 기업 유사도 분석 시스템',
-                github: 'https://github.com/polarbear091919/10-K-Report-Similarity',
+                github: 'https://github.com/financeis/10-K-Report-Similarity',
                 desc: 'SEC 10-K 보고서의 Business(Item 1) 및 Risk Factors(Item 1A) 섹션을 추출하여 OpenAI 임베딩 모델을 통해 기업 간 유사도를 계산하는 NLP 시스템.',
                 highlights: [
                     'SEC API를 통한 S&P 500 기업 10-K 보고서 자동 수집',
@@ -110,7 +110,7 @@ const projects = {
                 gradient: 'linear-gradient(135deg, #4a1942 0%, #8e2de2 100%)',
                 date: '2025.07',
                 title: '기술적 지표 결합 스크리닝 시스템',
-                github: 'https://github.com/polarbear091919/Indicator_Combining',
+                github: 'https://github.com/financeis/Indicator_Combining',
                 desc: 'KOSPI와 S&P500 주식을 대상으로 기술적 지표 스코어링과 구루의 양적 방법론을 통한 주식 스크리닝 시스템. 기술적 지표의 경우, 주가에 따라 지표 가중치를 동적으로 조절하여 지표 별 중요도를 실시간으로 반영하는 적응형 모델.',
                 highlights: [
                     'RSI, MACD, MA, OBV, ADX 등 다중 기술적 지표 통합 스코어링',

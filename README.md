@@ -42,7 +42,7 @@ node server.mjs
 
 `projects.js`의 9번 항목으로, 매크로·투자전략과 AI 활용·데이터 분석 분류에 표시합니다. 여러 투자전략 가설을 일관된 아키텍처에서 구현·백테스트하고 채택 여부를 판단하는 연구 기반으로 소개합니다. AI를 활용한 가설 구현은 프로젝트가 지원하려는 연구 흐름을 뜻하며, 저장소 자체에 AI가 전략을 생성하거나 자동 채택하는 기능이 있다는 의미는 아닙니다. 상세 창의 `research` 속성은 구성 요약(`facts`), 설계 설명 제목(`heading`), 공통 아키텍처·실험 흐름(`approaches`)을 담습니다. 이 속성이 없는 프로젝트는 기존 상세 구성을 사용합니다.
 
-내용은 [원본 저장소](https://github.com/polarbear091919/MiraeAsset_Dec_17)의 `master` 브랜치를 확인해 작성했습니다.
+내용은 [원본 저장소](https://github.com/financeis/MiraeAsset_Dec_17)의 `master` 브랜치를 확인해 작성했습니다.
 
 - 전략: `src/strategies/macro_rotation.py`, `src/strategies/momentum.py`
 - 데이터 구조와 지표: `docs/schema.md`, `src/db/schema.py`, `src/db/store.py`, `src/features/build.py`
@@ -53,9 +53,9 @@ node server.mjs
 
 ## 배포
 
-배포 주소: [김용운 Portfolio](https://polarbear091919.github.io/portfolio/)
+배포 주소: [김용운 Portfolio](https://financeis.github.io/portfolio/)
 
-GitHub 저장소 `polarbear091919/portfolio`의 **Settings → Pages → Deploy from a branch → main / (root)** 설정을 사용합니다. 변경 사항을 `main`에 커밋하고 푸시하면 GitHub Pages가 자동으로 배포합니다.
+GitHub 저장소 `financeis/portfolio`의 **Settings → Pages → Deploy from a branch → main / (root)** 설정을 사용합니다. 변경 사항을 `main`에 커밋하고 푸시하면 GitHub Pages가 자동으로 배포합니다.
 
 - 별도 빌드나 서버 설치가 필요 없는 HTML·CSS·JavaScript 정적 사이트입니다.
 - 루트의 `.nojekyll`로 Jekyll 처리 없이 정적 파일을 제공합니다.
