@@ -84,7 +84,7 @@ const projects = {
                     heading: '논문의 아이디어를 투자 실험으로 연결하는 과정',
                     facts: [
                         { value: '4개 모형', label: 'Naive · Ridge · BL · MVO' },
-                        { value: '48개월', label: '매월 이동하는 학습 구간' },
+                        { value: '48개월', label: 'Rolling Windows' },
                         { value: '50개 비교 대상', label: '48개 전략 조합 + 2개 벤치마크' }
                     ],
                     approaches: [
@@ -111,6 +111,12 @@ const projects = {
                             ]
                         }
                     ]
+                },
+                backtest: {
+                    image: 'images/backtest-vintage-lagged.png',
+                    title: '과거 공개본 기준 백테스트',
+                    caption: '2003년 2월부터 2022년 12월까지 50개 전략의 누적 자산가치입니다. 위 패널은 기본 전략, 아래 패널은 과거 36개월 변동성으로 연 10% 수준을 목표한 조정 전략이며, 진한 선은 네 모형의 lo_2와 SPY·균등비중을 나타냅니다.',
+                    source: 'https://github.com/financeis/Seminar_final/blob/master/reports/reproduction/report/run01_vintage_lagged_curves.png'
                 },
                 highlightsTitle: '검증에서 확인한 점과 남은 과제',
                 highlights: [

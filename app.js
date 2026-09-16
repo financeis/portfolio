@@ -18,6 +18,14 @@ function researchDetailsHtml(research) {
     '<section class="research-approach"><p class="research-label">' + escapeHtml(approach.label) + '</p><h4>' + escapeHtml(approach.title) + '</h4><p>' + escapeHtml(approach.description) + '</p><ul>' + approach.points.map(point => '<li>' + escapeHtml(point) + '</li>').join('') + '</ul></section>'
   ).join('') + '</div></section>';
 }
+function backtestFigureHtml(backtest) {
+  if (!backtest) return '';
+  return '<figure class="backtest-figure"><h3>' + escapeHtml(backtest.title || '백테스트 결과') + '</h3>' +
+    '<a href="' + escapeHtml(backtest.source || backtest.image) + '" target="_blank" rel="noopener noreferrer"><img src="' + escapeHtml(backtest.image) + '" alt="' + escapeHtml(backtest.title || '백테스트 결과 차트') + '" loading="lazy"></a>' +
+    (backtest.caption ? '<figcaption>' + escapeHtml(backtest.caption) +
+      (backtest.source ? ' <a href="' + escapeHtml(backtest.source) + '" target="_blank" rel="noopener noreferrer">원본 차트 ↗</a>' : '') + '</figcaption>' : '') +
+    '</figure>';
+}
 function renderProjects(filter = 'all') {
   const entries = Object.entries(projects).filter(([, project]) => filter === 'all' || (project.categories || []).includes(filter)).sort(([, a], [, b]) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || b.date.localeCompare(a.date));
   const previewEntries = [
@@ -75,6 +83,7 @@ function openProject(id, trigger) {
   document.querySelector('#dialog-content').innerHTML =
     '<div class="dialog-body"><p class="eyebrow">' + escapeHtml(project.date) + ' / ' + escapeHtml(project.discipline || 'RESEARCH') + '</p><h2 id="dialog-title">' + escapeHtml(project.title) + '</h2><p class="dialog-description">' + escapeHtml(project.desc) + '</p>' +
     researchDetailsHtml(project.research) +
+    backtestFigureHtml(project.backtest) +
     (project.image ? '<img class="dialog-image" src="' + escapeHtml(project.image) + '" alt="' + escapeHtml(project.title) + ' 원본 자료">' : '') +
     '<h3>' + escapeHtml(project.highlightsTitle || '주요 내용') + '</h3><ul>' + project.highlights.map(item => '<li>' + escapeHtml(item) + '</li>').join('') + '</ul>' +
     '<h3>분석 방법 및 도구</h3><div class="tags">' + tagsHtml(project.tags) + '</div>' +

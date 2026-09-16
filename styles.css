@@ -129,6 +129,12 @@ h1, h2, h3 { word-break: keep-all; }
 .research-approach p, .research-approach ul { font-size: 14px; line-height: 1.85; color: var(--body-text); word-break: keep-all; overflow-wrap: anywhere; }
 .research-approach ul { margin: 12px 0 0; padding-left: 17px; }
 .research-approach li:last-child { margin-bottom: 0; }
+.backtest-figure { margin: 30px 0 0; }
+.backtest-figure h3 { margin-top: 0; }
+.backtest-figure>a { display: block; border: 1px solid var(--line); background: #fff; }
+.backtest-figure img { display: block; width: 100%; height: auto; }
+.backtest-figure figcaption { margin-top: 10px; font-size: 13px; line-height: 1.75; color: var(--muted); word-break: keep-all; }
+.backtest-figure figcaption a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
 @media (max-width: 800px) {
   .container { width: calc(100% - 48px); }
   .profile { grid-template-columns: 145px 1fr; gap: 30px; padding-top: 42px; }
