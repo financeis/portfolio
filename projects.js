@@ -77,17 +77,49 @@ const projects = {
                 gradient: 'linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%)',
                 image: 'images/경기국면.png',
                 date: '2025.10',
-                title: '경기국면 탐지 기반 전술적 자산배분 전략 논문 구현',
+                title: '경기국면 탐지 기반 전술적 자산배분 — 논문 재구현·검증',
                 github: 'https://github.com/financeis/Seminar_final',
-                desc: 'FRED-MD 거시경제 데이터를 활용한 2단계 경기국면 분류 및 자산배분 전략. PCA 기반 차원 축소 후 K-means 클러스터링으로 국면을 탐지하고, Markov Chain 예측과 Ridge 회귀를 결합한 TAA 모델.',
+                desc: '거시경제의 국면 변화가 자산배분 의사결정에 어떻게 연결되는지 탐구한 논문 재구현 프로젝트입니다. FRED-MD 거시지표와 미국 ETF 자료로 국면 탐지·전이 추정·수익 예측·투자 비중·백테스트를 연결하고, 여러 모형과 배분 규칙으로 논문의 아이디어를 구현했습니다. 특히 투자 판단 당시 이용할 수 있었던 정보의 범위를 고려해 look-ahead bias를 줄이고, 데이터와 검증 가정이 결과 해석에 미치는 영향을 함께 살폈습니다.',
+                research: {
+                    heading: '논문의 아이디어를 투자 실험으로 연결하는 과정',
+                    facts: [
+                        { value: '4개 모형', label: 'Naive · Ridge · BL · MVO' },
+                        { value: '48개월', label: '매월 이동하는 학습 구간' },
+                        { value: '50개 비교 대상', label: '48개 전략 조합 + 2개 벤치마크' }
+                    ],
+                    approaches: [
+                        {
+                            label: '01 / PAPER TO STRATEGY',
+                            title: '국면 탐지부터 포트폴리오 평가까지',
+                            description: '논문의 수식과 절차를 단계별로 옮기고, 같은 자료와 수익 계산 기준에서 모형·배분 방식에 따른 차이를 비교했습니다.',
+                            points: [
+                                'PCA로 거시지표를 요약하고, L2 거리로 이상치 집단을 분리한 뒤 코사인 거리로 일반 국면을 군집화',
+                                '국면 소속도와 Markov 전이행렬을 추정해 다음 달 국면 전망을 자산배분에 연결',
+                                'Naive·Ridge·Black–Litterman·MVO에 4개 배분 규칙과 보유 ETF 수 2·3·4개를 조합하고 SPY·균등비중과 비교',
+                                '국면별 거시지표·전이 구조·코로나 극단값의 영향을 사후 분석하고, 과거 변동성을 이용한 비중 조정도 구현'
+                            ]
+                        },
+                        {
+                            label: '02 / INFORMATION TIMING',
+                            title: '미래 정보 유입을 줄이기 위한 설계',
+                            description: '관측월과 실제 이용 가능 시점의 차이에 주목해, 데이터 공개본 선택부터 학습·평가까지 시간 순서를 점검했습니다.',
+                            points: [
+                                '개정된 고정 공개본 실험과 과거 월별 공개본에 기본 2개월 지연을 적용한 실험을 구분해 비교',
+                                '매월 연속 48개월 학습 구간 안에서 변수 선택·결측 처리·표준화·PCA·국면 추정을 수행',
+                                '의사결정 시점에 확정된 목표 수익률만 학습에 사용하고, 변동성 조정에도 당시 알려진 수익률만 반영',
+                                '전체 표본의 국면 해석과 투자 백테스트를 분리하고, NBER 침체 구간은 사후 대조에만 활용'
+                            ]
+                        }
+                    ]
+                },
+                highlightsTitle: '검증에서 확인한 점과 남은 과제',
                 highlights: [
-                    'Daniel Cunha Oliveira et al.(2025)의 연구 방법론 기반',
-                    '32개년 128개의 FRED-MD 월별 거시지표 분석 및 PCA 차원 축소',
-                    '2단계의 K-means 클러스터링(코사인 거리 -> 유클리드 거리)',
-                    'Markov Transition Matrix 기반 국면 전이 예측',
-                    'Ridge 회귀 기반의 수익률 예측 및 자산 배분 시스템'
+                    '자료 시점에 대한 민감성 — 공개본 선택에 따라 Ridge의 성과가 크게 달라지는 결과를 확인했습니다. 정보의 가용 시점을 전략 평가의 핵심 가정으로 다뤘습니다.',
+                    '시점 편향 통제의 한계 — 과거 월별 공개본과 지연 가정은 지표별 실제 최초 발표 시각을 완전히 복원하지 못합니다. Yahoo 수정주가도 논문의 WRDS 원자료와 달라, look-ahead bias의 완전 제거나 원문 수치의 완전 재현을 주장하지 않습니다.',
+                    '모형 선택의 가정 — 기본 Ridge LOO 검증은 48개월 학습 구간에서 만든 특징 공간과 국면 소속을 공유합니다. 과거 시점마다 다시 적합하는 전진 검증도 구현했으나, 정규화 계수 선택 단위까지 달라 두 방식의 차이를 순수한 검증 방식의 효과로 해석하기는 어렵습니다.',
+                    '성과와 검증 범위 — 2003–2022년 전체 기본실험은 실행 버전을 명시한 저장 결과이며, 거래·차입 비용은 0으로 가정합니다. 대조군·비용·민감도 실험은 짧은 구간의 실행 확인에 한정되어, 장기 통계적 우위와 최신 코드의 전체 기간 재검증은 남은 과제입니다.'
                 ],
-                tags: ['Python', 'PCA', 'K-means', 'Markov Chain', 'Ridge Regression', 'Asset Allocation']
+                tags: ['Python', 'FRED-MD', 'PCA', 'K-means', 'Markov Chain', 'Ridge', 'Black–Litterman', 'MVO', 'Rolling Backtest']
             },
             2: {
                 icon: '📄',
@@ -189,7 +221,7 @@ const projects = {
 
 // Display metadata emphasizes macro research and investment strategy.
 const presentation = {
-  1: { categories: ['strategy'], typeLabel: '경기국면·자산배분 연구', discipline: 'Macro research & asset allocation', abstract: 'FRED-MD 거시경제지표로 경기국면을 분류하고, 국면 전이와 기대수익률을 추정하여 경기 변화에 따른 전술적 자산배분 전략 구현.', cardTags: ['Macroeconomics', 'Business Cycles', 'Asset Allocation'] },
+  1: { categories: ['strategy'], typeLabel: '논문 재구현 · 거시경제 기반 투자전략 연구', discipline: 'Regime-based allocation & empirical validation', abstract: '거시경제 국면 탐지부터 수익 예측·ETF 배분까지 논문의 아이디어를 구현하고, 4개 모형과 다양한 배분 규칙을 비교한 연구. 과거 공개본·발표 지연·48개월 재학습으로 look-ahead bias를 줄이기 위한 설계와 남은 한계를 함께 검토했습니다.', cardTags: ['Regime Detection', 'Asset Allocation', 'Look-ahead Bias'] },
   2: { categories: ['data'], typeLabel: '기업 공시 분석', discipline: 'Corporate disclosure analysis', abstract: 'SEC 10-K 보고서의 사업 내용과 위험요인을 텍스트로 분석하여 기업 간 유사성을 비교하는 시스템 구현. 공시 자료의 수집·처리와 기업 비교 분석에 활용.', cardTags: ['Corporate Disclosures', 'Risk Factors', 'Text Analysis'] },
   3: { categories: ['strategy', 'data'], typeLabel: '주식시장 데이터 분석', discipline: 'Market data analysis', abstract: 'KOSPI와 S&P 500 주식의 기술적 지표 및 재무 조건을 활용한 종목 스크리닝 시스템 구현. 시장 상태에 따른 지표 가중치 조절 및 투자 대상 탐색.', cardTags: ['Market Indicators', 'Financial Screening', 'Investment Analysis'] },
   4: { categories: ['strategy'], typeLabel: '교내금융학회 활동 · 세미나 발표', discipline: 'Asset allocation seminar', abstract: '전략적·전술적 자산배분의 개념과 주식·채권 등 자산군별 포트폴리오 구성 방법 발표. 평균-분산 최적화의 한계를 검토하고 Black-Litterman 모형 구현.', cardTags: ['Asset Allocation', 'Portfolio Construction', 'Black-Litterman'] },

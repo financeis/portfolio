@@ -51,6 +51,12 @@ node server.mjs
 
 검토 범위: 공개 코드를 읽고 설계·구현을 요약했으며 실제 백테스트를 실행하지 않았습니다. 저장소에는 실행 결과가 없고, `run.py`가 가져오는 `src/data/ingest.py`와 `src/data/quality.py`도 포함되어 있지 않습니다. 따라서 수집·품질 검사 전체의 실행 성공이나 수익률 성과를 주장하지 않습니다. 모멘텀의 3년 학습·다음 해 적용은 초기 기본값 구간 이후의 동작이며, 파라미터 선택에는 비용 차감 전 샤프를 사용합니다.
 
+## 경기국면 기반 전술적 자산배분 연구
+
+`projects.js`의 1번 항목은 논문 재구현의 범위, 미래 정보 유입을 줄이기 위한 설계, 검증의 한계를 함께 소개합니다. 목록 요약과 상세 창에 네 모형·배분 규칙 비교, 과거 공개본과 발표 지연, 48개월 학습 구간 내 전처리·국면 추정을 반영했습니다.
+
+내용은 [원본 저장소 README](https://github.com/financeis/Seminar_final)와 [재구현 보고서](https://github.com/financeis/Seminar_final/blob/master/reports/reproduction/report/report.md)를 확인해 작성했습니다. 이번 소개 수정 과정에서 백테스트를 새로 실행하지는 않았습니다. 전체 기본실험의 저장 결과와 짧은 구간의 대조·민감도 검사를 구분하며, 실제 최초 발표 시각·원자료 차이·Ridge 내부 검증 가정·비용 0 가정·최신 코드 전체 재실행의 한계를 명시합니다.
+
 ## 배포
 
 배포 주소: [김용운 Portfolio](https://financeis.github.io/portfolio/)
