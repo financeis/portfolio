@@ -60,16 +60,17 @@ const projects = {
                 categories: ['data'],
                 typeLabel: '대표 프로젝트 · 투자 리서치',
                 discipline: 'Investment research workspace',
-                abstract: '텔레그램 증권 리포트를 기업별로 정리하고, 선택한 보고서의 금융 정보를 구조화하는 웹앱. 같은 기준의 실적 추정치와 원문 근거를 연결하여 보고서 간 전망 변화를 비교합니다.',
-                desc: '텔레그램 PDF 수집부터 기업 분류, 선택한 리포트의 LLM 분석, 근거 검증과 보고서 비교까지 연결한 개인 리서치 워크스페이스입니다. 금융 정보 항목과 비교 기준을 설계하고, Claude Code와 Codex를 활용하여 React·FastAPI 웹앱으로 구현했습니다.',
+                abstract: '텔레그램 채널에 올라오는 증권사 리포트를 자동으로 모아 기업별로 정리하는 개인 리서치 웹앱입니다. 고른 리포트에서 목표주가·실적 추정·투자 논리를 뽑아, 같은 증권사의 전망이 어떻게 바뀌었는지와 증권사 간 시각이 어떻게 다른지를 원문 근거와 함께 비교합니다.',
+                desc: '리서치 리포트는 발행 순서대로 쌓이기 때문에, 한 기업을 따라가려면 지난 리포트를 다시 찾고 증권사마다 형식이 다른 목표주가와 실적 추정을 직접 맞춰 읽어야 했습니다. 이 수고를 줄이려고 PDF 수집, 리포트 분류와 기업 매핑, LLM 분석, 근거 확인, 리포트 비교를 하나로 잇는 웹앱을 만들었습니다. 어떤 숫자끼리 비교할 수 있는지와 어떤 내용을 원문에서 확인해야 하는지는 직접 설계했고, 구현은 Claude Code와 Codex를 활용해 React·FastAPI 웹앱으로 완성했습니다.',
+                highlightsTitle: '설계에서 신경 쓴 점',
                 highlights: [
-                    '기업별 라이브러리에서 보고서를 선택하여 분석·비교하는 작업 흐름',
-                    '기간·단위·회계 기준·시나리오가 일치하는 실적 추정치만 수치 비교',
-                    '동일 발행처의 전망 수정과 다른 발행처 간 견해 차이를 구분',
-                    '목표주가·실적·투자 논리·밸류에이션에 원문 페이지와 근거 연결',
-                    '기존 분석 재사용, 실패 건 재시도, PDF 수동 검토 및 커버리지 탐색'
+                    '비교할 수 있는 숫자만 비교 — 기간·단위·회계 기준(연결/별도)·시나리오가 모두 같은 실적 추정치끼리만 차이를 계산합니다. 조건이 다르면 숫자를 억지로 맞추지 않고 비워 둡니다.',
+                    '전망 수정과 견해 차이를 구분 — 같은 증권사의 시점별 변화는 전망 수정으로, 증권사 간 차이는 견해 차이로 나눠 보여줍니다.',
+                    '숫자에서 원문으로 — 추출한 목표주가·실적·밸류에이션마다 근거 문구와 PDF 페이지를 연결하고, 원문에서 확인되지 않는 수치는 화면에 띄우지 않습니다.',
+                    'LLM은 필요한 곳에만 — 사용자가 고른 리포트만 분석하고, 이미 분석한 결과는 재사용하며 실패한 건만 다시 시도합니다. 자동 분류가 어려운 리포트는 PDF를 보며 직접 승인·제외·재분류합니다(Human-in-the-loop).',
+                    '검증과 범위 — 파이썬 테스트 373개와 실제 PDF·DB·브라우저 동작으로 확인했습니다. 현재는 국내 주식 리포트 중심의 로컬 웹앱이며, 이미지로 된 PDF는 별도 검토로 넘깁니다.'
                 ],
-                tags: ['Python', 'React', 'FastAPI', 'Supabase', 'LangGraph', 'OpenAI API'],
+                tags: ['Python', 'Telethon', 'LangGraph', 'OpenAI API', 'PyMuPDF', 'Supabase', 'FastAPI', 'React'],
                 cardTags: ['Investment Research', 'Financial Document Analysis', 'Report Comparison']
             },
             1: {
@@ -79,53 +80,54 @@ const projects = {
                 date: '2025.10',
                 title: '경기국면 탐지 기반 전술적 자산배분 — 논문 재구현·검증',
                 github: 'https://github.com/financeis/Seminar_final',
-                desc: '거시경제의 국면 변화가 자산배분 의사결정에 어떻게 연결되는지 탐구한 논문 재구현 프로젝트입니다. FRED-MD 거시지표와 미국 ETF 자료로 국면 탐지·전이 추정·수익 예측·투자 비중·백테스트를 연결하고, 여러 모형과 배분 규칙으로 논문의 아이디어를 구현했습니다. 특히 투자 판단 당시 이용할 수 있었던 정보의 범위를 고려해 look-ahead bias를 줄이고, 데이터와 검증 가정이 결과 해석에 미치는 영향을 함께 살폈습니다.',
+                desc: '거시지표로 경기국면을 판별해 섹터 ETF 비중을 정하는 논문(Oliveira et al., 2025)을 파이썬으로 구현했습니다. 미국 경제지표 약 100개로 매달 국면을 나누고, 다음 달 국면을 예측해 SPY와 9개 섹터 ETF의 비중을 정합니다. 구현하면서 논문이 사후에 개정된 경제지표로 과거를 평가하고 있다는 점을 발견했습니다. 경제지표는 한두 달 늦게 발표되고 이후에도 수정되기 때문에, 매달 그 시점에 실제로 발표돼 있던 자료만 쓰도록 바꿔 다시 검증했습니다. 2025년 가을 학회 세미나에서 처음 구현했고, 2026년 9월 코드 전체를 다시 설계해 검증을 보강했습니다.',
                 research: {
-                    heading: '논문의 아이디어를 투자 실험으로 연결하는 과정',
+                    heading: '구현한 것과 바로잡은 것',
                     facts: [
-                        { value: '4개 모형', label: 'Naive · Ridge · BL · MVO' },
-                        { value: '48개월', label: 'Rolling Windows' },
-                        { value: '50개 비교 대상', label: '48개 전략 조합 + 2개 벤치마크' }
+                        { value: '239개월', label: '2003–2022 월별 리밸런싱' },
+                        { value: '50개 전략', label: '모형 4개 × 배분 방식 12개 + 벤치마크 2개' },
+                        { value: '0.72 → 0.53', label: 'Ridge Sharpe: 개정 지표 → 당시 공개 지표' }
                     ],
                     approaches: [
                         {
-                            label: '01 / PAPER TO STRATEGY',
-                            title: '국면 탐지부터 포트폴리오 평가까지',
-                            description: '논문의 수식과 절차를 단계별로 옮기고, 같은 자료와 수익 계산 기준에서 모형·배분 방식에 따른 차이를 비교했습니다.',
+                            label: '01 / REPLICATION',
+                            title: '국면 판별 → 다음 달 예측 → ETF 비중',
+                            description: '논문의 수식을 단계별로 옮기고, 모든 전략을 같은 자료와 같은 회계 기준으로 비교했습니다.',
                             points: [
-                                'PCA로 거시지표를 요약하고, L2 거리로 이상치 집단을 분리한 뒤 코사인 거리로 일반 국면을 군집화',
-                                '국면 소속도와 Markov 전이행렬을 추정해 다음 달 국면 전망을 자산배분에 연결',
-                                'Naive·Ridge·Black–Litterman·MVO에 4개 배분 규칙과 보유 ETF 수 2·3·4개를 조합하고 SPY·균등비중과 비교',
-                                '국면별 거시지표·전이 구조·코로나 극단값의 영향을 사후 분석하고, 과거 변동성을 이용한 비중 조정도 구현'
+                                '경제지표 약 100개를 PCA로 압축한 뒤, 2단계 k-means로 이상치 국면 1개와 일반 국면 5개로 분류',
+                                '국면 소속 확률과 전이행렬(마르코프 체인)로 다음 달 국면 확률을 예측',
+                                'Naive·Ridge·Black–Litterman·MVO로 ETF별 기대 성과를 추정하고, 보유 2·3·4개와 롱온리·롱숏 등 배분 방식을 조합해 SPY·균등비중과 비교',
+                                '1959–2023년 전체 표본으로 국면을 사후 해석 — 논문이 위기 국면으로 본 R0는 2020년 4월 한 달뿐'
                             ]
                         },
                         {
-                            label: '02 / INFORMATION TIMING',
-                            title: '미래 정보 유입을 줄이기 위한 설계',
-                            description: '관측월과 실제 이용 가능 시점의 차이에 주목해, 데이터 공개본 선택부터 학습·평가까지 시간 순서를 점검했습니다.',
+                            label: '02 / LOOK-AHEAD BIAS',
+                            title: '투자 시점에 알 수 있던 정보만 사용',
+                            description: '매달의 투자 결정에 그 시점까지 공개된 정보만 들어가도록 데이터의 시간 순서를 다시 짰습니다.',
                             points: [
-                                '개정된 고정 공개본 실험과 과거 월별 공개본에 기본 2개월 지연을 적용한 실험을 구분해 비교',
-                                '매월 연속 48개월 학습 구간 안에서 변수 선택·결측 처리·표준화·PCA·국면 추정을 수행',
-                                '의사결정 시점에 확정된 목표 수익률만 학습에 사용하고, 변동성 조정에도 당시 알려진 수익률만 반영',
-                                '전체 표본의 국면 해석과 투자 백테스트를 분리하고, NBER 침체 구간은 사후 대조에만 활용'
+                                'FRED-MD 월별 과거 공개본(vintage) 300여 개를 받아, 결정 시점에 실제로 발표돼 있던 자료만 사용(발표 지연 2개월 가정)',
+                                '변수 선택·결측 처리·표준화·PCA·국면 분류를 매달 직전 48개월 자료로만 다시 수행',
+                                '학습에는 결정 시점에 이미 확정된 수익률만 쓰고, 변동성 조정도 과거 수익률로만 계산',
+                                '같은 규칙에서 지표만 개정본과 당시 공개본으로 바꿔 두 결과를 비교'
                             ]
                         }
                     ]
                 },
                 backtest: {
                     image: 'images/backtest-vintage-lagged.png',
-                    title: '과거 공개본 기준 백테스트',
-                    caption: '2003년 2월부터 2022년 12월까지 50개 전략의 누적 자산가치입니다. 위 패널은 기본 전략, 아래 패널은 과거 36개월 변동성으로 연 10% 수준을 목표한 조정 전략이며, 진한 선은 네 모형의 lo_2와 SPY·균등비중을 나타냅니다.',
+                    title: '당시 공개 지표 기준 백테스트 (2003.02–2022.12)',
+                    caption: '50개 전략의 누적 자산가치(로그 눈금)입니다. 위는 기본 전략, 아래는 과거 36개월 변동성으로 연 10%를 목표해 비중을 조정한 결과입니다. 진한 선은 모형별 대표 전략(점수 상위 2개 ETF 롱온리)과 SPY·균등비중이며, 거래비용은 0으로 가정했습니다.',
                     source: 'https://github.com/financeis/Seminar_final/blob/master/reports/reproduction/report/run01_vintage_lagged_curves.png'
                 },
-                highlightsTitle: '검증에서 확인한 점과 남은 과제',
+                highlightsTitle: '결과와 배운 점',
                 highlights: [
-                    '자료 시점에 대한 민감성 — 공개본 선택에 따라 Ridge의 성과가 크게 달라지는 결과를 확인했습니다. 정보의 가용 시점을 전략 평가의 핵심 가정으로 다뤘습니다.',
-                    '시점 편향 통제의 한계 — 과거 월별 공개본과 지연 가정은 지표별 실제 최초 발표 시각을 완전히 복원하지 못합니다. Yahoo 수정주가도 논문의 WRDS 원자료와 달라, look-ahead bias의 완전 제거나 원문 수치의 완전 재현을 주장하지 않습니다.',
-                    '모형 선택의 가정 — 기본 Ridge LOO 검증은 48개월 학습 구간에서 만든 특징 공간과 국면 소속을 공유합니다. 과거 시점마다 다시 적합하는 전진 검증도 구현했으나, 정규화 계수 선택 단위까지 달라 두 방식의 차이를 순수한 검증 방식의 효과로 해석하기는 어렵습니다.',
-                    '성과와 검증 범위 — 2003–2022년 전체 기본실험은 실행 버전을 명시한 저장 결과이며, 거래·차입 비용은 0으로 가정합니다. 대조군·비용·민감도 실험은 짧은 구간의 실행 확인에 한정되어, 장기 통계적 우위와 최신 코드의 전체 기간 재검증은 남은 과제입니다.'
+                    '자료 시점이 결과를 바꿨습니다 — 같은 규칙에서 지표만 당시 공개본으로 바꾸자, 개정 지표로는 SPY를 앞섰던 Ridge 전략(상위 2개 롱온리)의 Sharpe가 0.72에서 0.53으로 떨어져 SPY(0.65)보다 낮아졌습니다. 경제지표를 쓰지 않는 MVO는 두 결과가 같아, 차이가 지표의 시점에서 나왔음을 확인했습니다.',
+                    '당시 공개 지표 기준 성과 — 국면별 과거 성과만 쓰는 Naive 전략이 Sharpe 0.91로 50개 중 가장 높았고, BL·MVO는 최대낙폭이 −38~−39%로 SPY(−53%)보다 작았습니다(모두 상위 2개 롱온리 기준).',
+                    '1차 구현의 오류 수정 — 세미나 버전을 논문 수식과 대조해 보니, 단계마다 국면을 따로 계산해 확률과 예측이 서로 다른 국면을 가리키는 오류를 포함해 보완할 점이 25가지 나왔습니다. 한 번 계산한 국면을 모든 모형이 함께 쓰도록 구조를 바꾸고, 테스트 369개로 계산을 확인했습니다.',
+                    '한계 — 거래비용은 0으로 가정했고, 가격은 논문의 WRDS 대신 Yahoo 수정주가를 썼습니다. 무작위 국면과 비교하는 대조 실험은 짧은 구간에서만 돌려, 국면 정보의 통계적 우위까지는 검증하지 못했습니다.',
+                    '배운 점 — 성과를 보기 전에 그 숫자를 그때 알 수 있었는지부터 확인하게 됐습니다. 발표 뒤에도 수정되는 고용·물가 지표에 금리가 반응하는 채권시장에서도 꼭 지켜야 할 원칙이라고 생각합니다.'
                 ],
-                tags: ['Python', 'FRED-MD', 'PCA', 'K-means', 'Markov Chain', 'Ridge', 'Black–Litterman', 'MVO', 'Rolling Backtest']
+                tags: ['Python', 'FRED-MD', 'Real-time Vintage', 'PCA', 'K-means', 'Markov Chain', 'Ridge', 'Black–Litterman', 'MVO', 'Rolling Backtest']
             },
             2: {
                 icon: '📄',
@@ -227,7 +229,7 @@ const projects = {
 
 // Display metadata emphasizes macro research and investment strategy.
 const presentation = {
-  1: { categories: ['strategy'], typeLabel: '논문 재구현 · 거시경제 기반 투자전략 연구', discipline: 'Regime-based allocation & empirical validation', abstract: '거시경제 국면 탐지부터 수익 예측·ETF 배분까지 논문의 아이디어를 구현하고, 4개 모형과 다양한 배분 규칙을 비교한 연구. 과거 공개본·발표 지연·48개월 재학습으로 look-ahead bias를 줄이기 위한 설계와 남은 한계를 함께 검토했습니다.', cardTags: ['Regime Detection', 'Asset Allocation', 'Look-ahead Bias'] },
+  1: { categories: ['strategy'], typeLabel: '논문 재구현 · 거시경제 기반 투자전략 연구', discipline: 'Regime-based allocation & empirical validation', abstract: '거시지표로 경기국면을 판별해 섹터 ETF 비중을 정하는 논문을 구현하고 검증했습니다. 논문이 사후에 개정된 경제지표로 과거를 평가한다는 점을 발견해 당시 실제로 발표돼 있던 자료만 쓰도록 바꿨고, 그러자 논문에서 가장 좋았던 Ridge 모형의 우위가 사라졌습니다.', cardTags: ['Regime Detection', 'Asset Allocation', 'Look-ahead Bias'] },
   2: { categories: ['data'], typeLabel: '기업 공시 분석', discipline: 'Corporate disclosure analysis', abstract: 'SEC 10-K 보고서의 사업 내용과 위험요인을 텍스트로 분석하여 기업 간 유사성을 비교하는 시스템 구현. 공시 자료의 수집·처리와 기업 비교 분석에 활용.', cardTags: ['Corporate Disclosures', 'Risk Factors', 'Text Analysis'] },
   3: { categories: ['strategy', 'data'], typeLabel: '주식시장 데이터 분석', discipline: 'Market data analysis', abstract: 'KOSPI와 S&P 500 주식의 기술적 지표 및 재무 조건을 활용한 종목 스크리닝 시스템 구현. 시장 상태에 따른 지표 가중치 조절 및 투자 대상 탐색.', cardTags: ['Market Indicators', 'Financial Screening', 'Investment Analysis'] },
   4: { categories: ['strategy'], typeLabel: '교내금융학회 활동 · 세미나 발표', discipline: 'Asset allocation seminar', abstract: '전략적·전술적 자산배분의 개념과 주식·채권 등 자산군별 포트폴리오 구성 방법 발표. 평균-분산 최적화의 한계를 검토하고 Black-Litterman 모형 구현.', cardTags: ['Asset Allocation', 'Portfolio Construction', 'Black-Litterman'] },

@@ -120,7 +120,7 @@ h1, h2, h3 { word-break: keep-all; }
 .research-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 26px 0 30px; padding: 20px 0; border-block: 1px solid var(--line); }
 .research-facts>div { display: flex; flex-direction: column; gap: 5px; padding-inline: 18px; border-left: 1px solid var(--line); }
 .research-facts>div:first-child { padding-left: 0; border: 0; }
-.research-facts dt { font-size: 13px; color: var(--muted); }
+.research-facts dt { font-size: 13px; color: var(--muted); word-break: keep-all; }
 .research-facts dd { order: -1; margin: 0; font-size: 22px; line-height: 1.4; font-weight: 600; color: var(--green); }
 .research-approaches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .research-approach { padding: 20px; border: 1px solid var(--line); border-radius: 4px; }
