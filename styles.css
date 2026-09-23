@@ -125,7 +125,7 @@ h1, h2, h3 { word-break: keep-all; }
 .research-approaches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .research-approach { padding: 20px; border: 1px solid var(--line); border-radius: 4px; }
 .research-approach .research-label { margin-bottom: 10px; font-size: 12px; font-weight: 600; letter-spacing: .5px; color: var(--green); }
-.research-approach h4 { font-size: 16px; line-height: 1.6; font-weight: 600; margin-bottom: 10px; }
+.research-approach h4 { font-size: 16px; line-height: 1.6; font-weight: 600; margin-bottom: 10px; word-break: keep-all; }
 .research-approach p, .research-approach ul { font-size: 14px; line-height: 1.85; color: var(--body-text); word-break: keep-all; overflow-wrap: anywhere; }
 .research-approach ul { margin: 12px 0 0; padding-left: 17px; }
 .research-approach li:last-child { margin-bottom: 0; }
