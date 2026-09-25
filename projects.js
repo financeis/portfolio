@@ -7,7 +7,7 @@ const projects = {
                 featured: true,
                 featuredOrder: 3,
                 featuredTone: 'amber',
-                categories: ['strategy', 'data'],
+                categories: ['finance_ai'],
                 typeLabel: '투자전략 연구 · 공통 아키텍처 설계',
                 discipline: 'Reusable architecture & strategy research',
                 abstract: '가격·매크로 데이터를 매일 같은 형식으로 증분 적재하고, 여러 투자전략을 같은 데이터로 백테스트해 결과를 같은 형식으로 저장하는 공통 파이프라인입니다. 데이터가 늘 최신으로 유지되기 때문에 매일 다른 전략으로 바로 백테스트하고, 성과를 한 기준에서 일관되게 비교할 수 있습니다.',
@@ -65,7 +65,7 @@ const projects = {
                 logoAlt: 'ResearchDesk — Your Research Workspace',
                 logoWidth: 174,
                 image: 'research-desk/assets/comparison.png',
-                categories: ['data'],
+                categories: ['finance_ai'],
                 typeLabel: '증권 리포트 분석',
                 discipline: 'Investment research workspace',
                 abstract: '텔레그램 채널에 올라오는 증권사 리포트를 자동으로 모아 기업별로 정리하는 개인 리서치 웹앱입니다. 고른 리포트에서 목표주가·실적 추정·투자 논리를 뽑아, 같은 증권사의 전망이 어떻게 바뀌었는지와 증권사 간 시각이 어떻게 다른지를 원문 근거와 함께 비교합니다.',
@@ -146,7 +146,7 @@ const projects = {
                 logoAlt: '10-K Report — Company Relationships',
                 logoWidth: 190,
                 caseStudy: 'ten-k/index.html',
-                categories: ['data'],
+                categories: ['finance_ai'],
                 typeLabel: '금융 NLP · 기업 관계 분석 · 리서치 웹앱',
                 discipline: 'Financial NLP & Corporate Relationships',
                 abstract: '관심 기업이 생겼을 때, 같은 세부 사업을 하는 기업과 공급망으로 연결된 기업을 쉽게 찾고 싶어 시작했습니다. 산업분류만으로 찾기 어려운 관련 기업을 탐색하기 위해 S&P 500 기업의 10-K를 분석했습니다. 사업 설명의 유사도와 경쟁·공급·협력 관계를 살펴보고, 공시 원문으로 근거를 확인하는 웹앱을 구축했습니다.',
@@ -250,7 +250,7 @@ const projects = {
                 date: '2025.05',
                 title: '타임폴리오 Road to Fund Manager 투자 대회 상위 10%',
                 github: null,
-                categories: ['strategy', 'award'],
+                categories: ['award'],
                 typeLabel: '투자 대회 · 상위 10%',
                 discipline: 'Investment competition',
                 abstract: '타임폴리오 Road to Fund Manager 투자 대회 상위 10% 달성. 탑다운 관점의 산업 분석과 수급 동향 분석을 바탕으로 주도주를 선별하여 투자.',
@@ -283,10 +283,10 @@ const projects = {
 
 // Display metadata emphasizes macro research and investment strategy.
 const presentation = {
-  1: { categories: ['strategy'], typeLabel: '논문 재구현 · 거시경제 기반 투자전략 연구', discipline: 'Regime-based allocation & empirical validation', abstract: '거시지표로 경기국면을 판별해 섹터 ETF 비중을 정하는 논문을 구현하고 검증했습니다. 논문이 사후에 개정된 경제지표로 과거를 평가한다는 점을 발견해 당시 실제로 발표돼 있던 자료만 쓰도록 바꿨습니다. 이를 통해 논문의 백테스트 결과를 반박 및 수정했습니다.', cardTags: ['Regime Detection', 'Asset Allocation', 'Look-ahead Bias'] },
-  3: { categories: ['strategy', 'data'], typeLabel: '주식시장 데이터 분석', discipline: 'Market data analysis', abstract: 'KOSPI와 S&P 500 주식의 기술적 지표 및 재무 조건을 활용한 종목 스크리닝 시스템 구현. 시장 상태에 따른 지표 가중치 조절 및 투자 대상 탐색.', cardTags: ['Market Indicators', 'Financial Screening', 'Investment Analysis'] },
-  4: { categories: ['strategy'], typeLabel: '교내금융학회 활동 · 세미나 발표', discipline: 'Asset allocation seminar', abstract: '전략적·전술적 자산배분의 개념과 주식·채권 등 자산군별 포트폴리오 구성 방법 발표. 평균-분산 최적화의 한계를 검토하고 Black-Litterman 모형 구현.', cardTags: ['Asset Allocation', 'Portfolio Construction', 'Black-Litterman'] },
-  5: { categories: ['strategy', 'award'], typeLabel: '투자 대회 · 한국 본선 진출', discipline: 'Investment competition', abstract: 'WorldQuant International Quant Championship 한국 본선 진출 및 컨설턴트 자격 획득. 옵션·기술적·대체 데이터를 활용한 투자전략 개발 및 평가.', cardTags: ['Investment Strategies', 'Market Data', 'Alternative Data'] },
-  6: { categories: ['data', 'award'], typeLabel: '논문 공모전 · 우수상', discipline: 'Empirical analysis', abstract: '이중차분법(DiD)을 이용해 전통 스포츠 구단의 e스포츠 참여가 온라인 브랜드 인지도에 미치는 영향을 실증 분석. 데이터 전처리·계량분석 및 분석 파트 작성 담당.', cardTags: ['Difference-in-Differences', 'Stata', 'Python'] }
+  1: { categories: ['finance_ai'], typeLabel: '논문 재구현 · 거시경제 기반 투자전략 연구', discipline: 'Regime-based allocation & empirical validation', abstract: '거시지표로 경기국면을 판별해 섹터 ETF 비중을 정하는 논문을 구현하고 검증했습니다. 논문이 사후에 개정된 경제지표로 과거를 평가한다는 점을 발견해 당시 실제로 발표돼 있던 자료만 쓰도록 바꿨습니다. 이를 통해 논문의 백테스트 결과를 반박 및 수정했습니다.', cardTags: ['Regime Detection', 'Asset Allocation', 'Look-ahead Bias'] },
+  3: { categories: ['finance_ai'], typeLabel: '주식시장 데이터 분석', discipline: 'Market data analysis', abstract: 'KOSPI와 S&P 500 주식의 기술적 지표 및 재무 조건을 활용한 종목 스크리닝 시스템 구현. 시장 상태에 따른 지표 가중치 조절 및 투자 대상 탐색.', cardTags: ['Market Indicators', 'Financial Screening', 'Investment Analysis'] },
+  4: { categories: ['finance_ai'], typeLabel: '교내금융학회 활동 · 세미나 발표', discipline: 'Asset allocation seminar', abstract: '전략적·전술적 자산배분의 개념과 주식·채권 등 자산군별 포트폴리오 구성 방법 발표. 평균-분산 최적화의 한계를 검토하고 Black-Litterman 모형 구현.', cardTags: ['Asset Allocation', 'Portfolio Construction', 'Black-Litterman'] },
+  5: { categories: ['award'], typeLabel: '투자 대회 · 한국 본선 진출', discipline: 'Investment competition', abstract: 'WorldQuant International Quant Championship 한국 본선 진출 및 컨설턴트 자격 획득. 옵션·기술적·대체 데이터를 활용한 투자전략 개발 및 평가.', cardTags: ['Investment Strategies', 'Market Data', 'Alternative Data'] },
+  6: { categories: ['award'], typeLabel: '논문 공모전 · 우수상', discipline: 'Empirical analysis', abstract: '이중차분법(DiD)을 이용해 전통 스포츠 구단의 e스포츠 참여가 온라인 브랜드 인지도에 미치는 영향을 실증 분석. 데이터 전처리·계량분석 및 분석 파트 작성 담당.', cardTags: ['Difference-in-Differences', 'Stata', 'Python'] }
 };
 Object.entries(presentation).forEach(([id, details]) => Object.assign(projects[id], details));

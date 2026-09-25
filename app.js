@@ -29,7 +29,6 @@ function backtestFigureHtml(backtest) {
 }
 function renderProjects(filter = activeProjectFilter) {
   activeProjectFilter = filter;
-  document.querySelector('.filters').hidden = !projectsExpanded;
   filters.forEach(button => {
     const active = button.dataset.filter === filter;
     button.classList.toggle('active', active);
@@ -37,7 +36,7 @@ function renderProjects(filter = activeProjectFilter) {
   });
   const entries = Object.entries(projects).filter(([, project]) => filter === 'all' || (project.categories || []).includes(filter)).sort(([, a], [, b]) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || (a.featured && b.featured ? (a.featuredOrder ?? 99) - (b.featuredOrder ?? 99) : 0) || b.date.localeCompare(a.date));
   const previewEntries = entries.filter(([, project]) => project.featured);
-  const canExpand = Object.values(projects).some(project => !project.featured);
+  const canExpand = filter === 'all' && entries.length > previewEntries.length;
   const visibleEntries = canExpand && !projectsExpanded ? previewEntries : entries;
   grid.innerHTML = visibleEntries.map(([id, project]) => {
     return '<article class="project-card' + (project.featured ? ' project-featured project-featured-' + escapeHtml(project.featuredTone || 'green') : '') + '"><div class="project-date">' + escapeHtml(project.date) + '</div>' +
@@ -72,6 +71,7 @@ projectToggle.addEventListener('click', () => {
 });
 
 filters.forEach(button => button.addEventListener('click', () => {
+  projectsExpanded = false;
   renderProjects(button.dataset.filter);
 }));
 

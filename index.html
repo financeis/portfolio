@@ -10,10 +10,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=featured-only">
+  <link rel="stylesheet" href="styles.css?v=project-categories">
   <link rel="stylesheet" href="research-desk-card.css?v=financial-research">
-  <script src="projects.js?v=financial-research" defer></script>
-  <script src="app.js?v=featured-only" defer></script>
+  <script src="projects.js?v=project-categories" defer></script>
+  <script src="app.js?v=project-categories" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">본문으로 바로가기</a>
@@ -45,11 +45,10 @@
     <section class="section" id="portfolio" aria-labelledby="work-title">
       <div class="section-heading"><h2 id="work-title">Research & Projects</h2><span class="section-note">연구 프로젝트 및 대회</span></div>
       <div class="filter-bar">
-        <div class="filters" hidden role="group" aria-label="프로젝트 분류">
+        <div class="filters" role="group" aria-label="프로젝트 분류">
           <button type="button" class="filter active" data-filter="all" aria-pressed="true">전체 <span>9</span></button>
-          <button type="button" class="filter" data-filter="strategy" aria-pressed="false">매크로·투자전략</button>
-          <button type="button" class="filter" data-filter="data" aria-pressed="false">AI 활용 · 데이터 분석</button>
-          <button type="button" class="filter" data-filter="award" aria-pressed="false">대회·수상</button>
+          <button type="button" class="filter" data-filter="finance_ai" aria-pressed="false">금융·AI 활용 프로젝트</button>
+          <button type="button" class="filter" data-filter="award" aria-pressed="false">대회 및 수상</button>
         </div>
         <span class="project-count" id="project-count" role="status">9 entries</span>
       </div>
