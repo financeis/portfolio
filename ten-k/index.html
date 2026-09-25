@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f6f7f2">
-  <meta name="description" content="S&P 500 기업의 SEC 10-K에서 산업분류가 놓치는 기업 간 관계를 포착했습니다. 텍스트 유사도와 공시 근거를 결합한 관계 탐색, 원문 조회, 검수 웹앱.">
+  <meta name="description" content="관심 기업과 비슷한 세부 사업을 하는 기업, 공급망으로 연결된 기업을 찾는 10-K 기반 탐색 시스템. 사업 설명의 유사도와 여러 기업의 공시 근거를 함께 분석했습니다.">
   <title>10-K 기업 관계 지도 | 김용운 Portfolio</title>
   <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="case-study.css">
@@ -17,20 +17,21 @@
       <p class="eyebrow">10-K REPORT SIMILARITY · 기업 관계 지도</p>
       <h1>산업분류 밖의 관계를<br>공시에서 찾다.</h1>
       <p class="lead">산업 분류 너머의 사업 구조를 포착</p>
-      <p class="intro">S&amp;P 500 기업의 10-K를 분석해 일반적인 산업분류로 잡아내기 어려운 경쟁·공급·협력 관계를 포착했습니다. 사업 설명의 유사도로 탐색 범위를 넓히고, 공시 문장에서 관계를 판정해 원문 근거와 함께 살펴보는 웹앱을 구축했습니다.</p>
+      <p class="intro">관심 기업이 생겼을 때, 같은 세부 사업을 하는 기업과 공급망으로 연결된 기업을 쉽게 찾고 싶어 시작했습니다. S&amp;P 500 기업의 10-K를 분석해 사업이 유사한 기업을 찾고, 경쟁·공급·협력 관계를 공시 근거와 함께 확인하는 웹앱을 구축했습니다.</p>
       <div class="links"><a class="primary" href="#relations">실제 웹앱 화면 보기 ↓</a><a href="https://github.com/financeis/10-K-Report-Similarity" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
       <figure class="hero-screen"><a href="assets/nvidia-relations.webp" target="_blank" rel="noopener noreferrer" aria-label="NVIDIA 관계도 실제 화면 크게 보기"><img src="assets/nvidia-relations.webp" width="1600" height="1100" fetchpriority="high" alt="실제 웹앱: NVIDIA 중심의 기업 관계 그래프와 TSMC 공급·협력 관계의 10-K 근거 문장"></a><figcaption>직접 구현한 React·FastAPI 웹앱. 관계를 선택하면 판정 정보와 근거 문장을 한 화면에서 확인합니다. 아래 캡처는 2024년 제출 공시 데이터입니다.</figcaption></figure>
     </section>
     <nav aria-label="프로젝트 목차"><a href="#question">01 목적</a><a href="#method">02 설계</a><a href="#relations">03 실제 구현</a><a href="#limits">04 활용과 해석</a></nav>
     <section id="question" class="chapter">
-      <p class="eyebrow">01 / PURPOSE</p><h2>업종이 달라도<br>경쟁하고 거래합니다.</h2>
-      <div class="columns"><p>GICS·SIC는 기업을 업종별로 비교하는 출발점입니다. 그러나 서로 다른 업종의 고객과 공급사, 여러 사업 영역에서 만나는 경쟁사, 기술과 유통망을 공유하는 협력사를 분류표 하나로 읽기는 어렵습니다.</p><p>이 프로젝트는 <strong>산업분류로 드러나지 않는 기업 간 관계를 찾고, 그 연결을 설명하는 공시 근거를 제공</strong>하는 데 목적을 뒀습니다. 기업을 검색한 뒤 관계 지도를 탐색하고, 연결된 이유를 원문으로 확인하는 리서치 도구로 구현했습니다.</p></div>
-      <aside class="example"><p class="eyebrow">BEYOND INDUSTRY LABELS</p><div class="pair"><strong>NVIDIA <small>정보기술</small></strong><span aria-hidden="true">↔</span><strong>Amazon <small>경기소비재</small></strong></div><p>서로 다른 GICS 섹터에 속해도 같은 사업 영역에서 경쟁할 수 있습니다. NVIDIA의 10-K는 Amazon을 클라우드 서비스 기업이자 내부용 가속 컴퓨팅 솔루션을 설계하는 경쟁 대상으로 언급합니다. 관계도에서 섹터가 다른 기업만 골라 이런 연결을 확인할 수 있습니다.</p><a href="#cross-sector">실제 필터 화면 보기 ↓</a></aside>
+      <p class="eyebrow">01 / PURPOSE</p><h2>관심 기업과 연결된 종목을<br>찾기 위해 시작했습니다.</h2>
+      <p class="section-intro">특정 테마나 기업이 시장의 관심을 받으면, 같은 흐름에서 수혜를 받을 만한 다른 기업을 찾게 됩니다. 이때 필요한 것은 넓은 업종 목록보다 구체적인 사업 내용과 거래 관계입니다.</p>
+      <div class="columns"><article><h3>루멘텀과 비슷한 사업을 하는 기업은?</h3><p>광통신 기업 루멘텀에 관심이 생겼다면 코히런트처럼 광통신 관련 사업을 하는 기업도 살펴보고 싶습니다. 하지만 넓은 산업분류 안에서 어느 기업이 비슷한 제품과 기술을 다루는지 다시 찾아야 합니다. 기업의 사업 설명을 직접 비교하면 이런 탐색에 도움이 됩니다.</p></article><article><h3>아이폰에 부품을 공급하는 기업은?</h3><p>Apple의 신제품이 주목받으면 아이폰에 부품을 공급하는 기업에도 관심이 갑니다. IT 업종 목록만으로는 공급업체를 찾기 어렵고, Apple의 10-K에 그 회사 이름이 명시돼 있지 않을 수도 있습니다. 공급업체 쪽 공시까지 찾아 읽어야 연결이 드러나는 경우가 있습니다.</p></article></div>
+      <p>이런 기업을 찾을 때마다 여러 회사의 10-K를 일일이 읽는 수고를 줄이고 싶었습니다. 그래서 <strong>사업 설명이 유사한 기업을 찾는 기능</strong>과 <strong>여러 기업의 공시에서 경쟁·공급·협력 관계를 찾는 기능</strong>을 함께 구현했습니다. 관심 기업에서 출발해 살펴볼 종목을 넓히고, 관련성이 있다고 판단한 근거까지 확인할 수 있도록 만들었습니다.</p>
     </section>
     <section id="method" class="chapter">
-      <p class="eyebrow">02 / DESIGN</p><h2>넓게 찾고,<br>문장으로 확인하는 구조.</h2>
+      <p class="eyebrow">02 / DESIGN</p><h2>사업 설명의 유사도와<br>공시 속 기업 언급을 함께 분석했습니다.</h2>
       <ol class="pipeline"><li><span>01</span><strong>수집·정제</strong><p>SEC EDGAR 10-K<br>Item 1·1A 추출·품질 검사</p></li><li><span>02</span><strong>후보 탐색</strong><p>TF-IDF + 임베딩<br>공시의 회사 이름 언급</p></li><li><span>03</span><strong>관계 판정</strong><p>회사 식별·주변 문맥 확인<br>유형별 판정과 근거 저장</p></li><li><span>04</span><strong>탐색·검수</strong><p>기업 관계 그래프<br>원문 조회·사람의 검수</p></li></ol>
-      <div class="columns"><article><h3>단어와 의미를 함께 비교</h3><p>사업 설명(Item 1)에 TF-IDF·SBERT·OpenAI 임베딩을 적용했습니다. 임베딩의 평균 벡터를 제거하고, 서로 다른 척도의 유사도를 기업쌍 백분위로 바꿔 결합했습니다. 사업이 비슷한 기업 상위 20곳과 공시에 직접 등장한 기업을 함께 후보로 구성했습니다.</p></article><article><h3>유사도와 관계 근거를 구분</h3><p>사업 설명이 비슷하다는 사실만으로 관계를 확정하지 않았습니다. Item 1·1A의 회사 이름과 앞뒤 문맥을 Jev 모델로 판정하고, 경쟁·공급·협력 등의 유형에 근거 문장을 연결했습니다. 회사 별칭과 분사 시점, 신용평가처럼 관계로 보지 않는 문맥도 처리했습니다.</p></article><article><h3>모델 판정과 사람 검수를 연결</h3><p>판정 점수에 따라 채택·기각·검수 대상으로 구분하고, 사람이 근거를 읽고 판단을 기록하는 화면을 만들었습니다. 표본 검수에서는 모델 답을 가려 독립적으로 라벨을 붙이고, 개발 표본과 확인 표본을 나눠 경쟁·공급·협력 판정을 평가했습니다.</p></article><article><h3>다시 실행해도 남는 결과</h3><p>YAML 설정과 CLI로 수집·임베딩·판정·내보내기를 분리했습니다. 텍스트와 모델 입력별 캐시를 재사용하고, 관계 그래프와 검수 기록은 별도 데이터베이스에 저장해 그래프를 다시 생성해도 검수 결과가 보존되도록 했습니다.</p></article></div>
+      <div class="columns"><article><h3>단어와 의미를 함께 비교</h3><p>사업 설명(Item 1)에 TF-IDF·SBERT·OpenAI 임베딩을 적용했습니다. 임베딩의 평균 벡터를 제거하고, 서로 다른 척도의 유사도를 기업쌍 백분위로 바꿔 결합했습니다. 사업이 비슷한 기업 상위 20곳과 공시에 직접 등장한 기업을 함께 후보로 구성했습니다.</p></article><article><h3>유사도와 관계 근거를 구분</h3><p>여러 기업의 Item 1·1A에서 회사 이름과 앞뒤 문맥을 Jev 모델로 판정하고, 경쟁·공급·협력 등의 유형에 근거 문장을 연결했습니다. 관심 기업의 공시뿐 아니라 상대 기업의 공시에서 나온 언급도 함께 활용했습니다. 사업 설명의 유사도는 탐색 후보를 찾는 데 쓰고, 관계 유형은 공시 문장으로 확인했습니다. 회사 별칭과 분사 시점, 신용평가처럼 관계로 보지 않는 문맥도 처리했습니다.</p></article><article><h3>모델 판정과 사람 검수를 연결</h3><p>판정 점수에 따라 채택·기각·검수 대상으로 구분하고, 사람이 근거를 읽고 판단을 기록하는 화면을 만들었습니다. 표본 검수에서는 모델 답을 가려 독립적으로 라벨을 붙이고, 개발 표본과 확인 표본을 나눠 경쟁·공급·협력 판정을 평가했습니다.</p></article><article><h3>다시 실행해도 남는 결과</h3><p>YAML 설정과 CLI로 수집·임베딩·판정·내보내기를 분리했습니다. 텍스트와 모델 입력별 캐시를 재사용하고, 관계 그래프와 검수 기록은 별도 데이터베이스에 저장해 그래프를 다시 생성해도 검수 결과가 보존되도록 했습니다.</p></article></div>
     </section>
     <section id="relations" class="chapter">
       <p class="eyebrow">03 / WEB APPLICATION</p><h2>관계도를 따라가면,<br>공시의 근거 문장에 도착합니다.</h2>
@@ -41,9 +42,9 @@
       <p class="implementation">Python · edgartools · TF-IDF · Sentence-BERT · OpenAI Embeddings · Jev · FastAPI · React · TypeScript · Cytoscape.js · SQLite</p>
     </section>
     <section id="limits" class="chapter">
-      <p class="eyebrow">04 / RESEARCH USE</p><h2>기업 비교에 관계와 근거를 더했습니다.</h2>
-      <div class="columns"><article><h3>업종 밖으로 비교 대상을 확장</h3><p>산업분류를 출발점으로 삼되, 공통 사업·고객·공급망을 통해 연결된 기업까지 탐색 범위를 넓혔습니다. 분석가는 관계 그래프에서 비교 대상을 찾고, 각 연결을 설명하는 문장을 함께 검토할 수 있습니다.</p></article><article><h3>공시가 말하는 범위를 명확하게</h3><p>공개된 10-K의 Item 1·1A를 바탕으로 구성한 지도입니다. 익명 고객과 분석 대상 밖 기업을 따로 표시하고, 모델 판정·사람의 검수·과거 관계를 구분했습니다.</p></article></div>
-      <p class="closing">기업을 업종 하나로 묶는 데서 나아가,<br>서로 어떻게 연결되는지 공시 근거와 함께 읽는 도구를 만들었습니다.</p>
+      <p class="eyebrow">04 / RESEARCH USE</p><h2>관심 기업에서 관련 기업을 찾고,<br>사업 내용을 확인하는 도구입니다.</h2>
+      <div class="columns"><article><h3>같은 세부 사업과 공급망을 따라 탐색</h3><p>사업 설명이 비슷한 후보와 공시 근거가 있는 관계를 함께 살펴보며 조사할 기업을 넓힐 수 있습니다. 유사 사업 기업을 찾은 뒤 제품과 기술을 비교하거나, 공급·협력 관계의 근거 문장에서 거래 내용을 확인하는 데 활용합니다.</p></article><article><h3>공시가 말하는 범위를 명확하게</h3><p>공개된 10-K의 Item 1·1A를 바탕으로 구성한 지도입니다. 익명 고객과 분석 대상 밖 기업을 따로 표시하고, 모델 판정·사람의 검수·과거 관계를 구분했습니다.</p></article></div>
+      <p class="closing">관련 기업을 찾기 위해 공시를 하나씩 뒤지는 과정을 줄이고,<br>찾아낸 기업의 사업과 거래 관계를 확인할 수 있게 만들었습니다.</p>
       <div class="sources"><h3>코드와 분석 자료</h3><a href="https://github.com/financeis/10-K-Report-Similarity" target="_blank" rel="noopener noreferrer">프로젝트 저장소 ↗</a><a href="https://github.com/financeis/10-K-Report-Similarity/blob/main/reports/sp500_2024.md" target="_blank" rel="noopener noreferrer">텍스트 모델 비교·보조 분석 ↗</a><p>화면은 로컬 웹앱의 실제 실행 결과를 캡처했습니다. 수익률 동조성과 실적 발표 반응은 탐색 결과를 살펴보는 보조 분석으로 수행했습니다.</p></div>
     </section>
   </main>
