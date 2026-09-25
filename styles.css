@@ -192,3 +192,5 @@ h1, h2, h3 { word-break: keep-all; }
   .research-approach { padding: 18px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+.filters[hidden] { display: none; }

@@ -6,6 +6,7 @@ const filters = document.querySelectorAll('.filter');
 const projectDisclosure = document.querySelector('#project-disclosure');
 const projectToggle = document.querySelector('#project-toggle');
 let projectsExpanded = false;
+let activeProjectFilter = 'all';
 let lastProjectButton = null;
 
 const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -26,13 +27,17 @@ function backtestFigureHtml(backtest) {
       (backtest.source ? ' <a href="' + escapeHtml(backtest.source) + '" target="_blank" rel="noopener noreferrer">원본 자료 ↗</a>' : '') + '</figcaption>' : '') +
     '</figure>';
 }
-function renderProjects(filter = 'all') {
+function renderProjects(filter = activeProjectFilter) {
+  activeProjectFilter = filter;
+  document.querySelector('.filters').hidden = !projectsExpanded;
+  filters.forEach(button => {
+    const active = button.dataset.filter === filter;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+  });
   const entries = Object.entries(projects).filter(([, project]) => filter === 'all' || (project.categories || []).includes(filter)).sort(([, a], [, b]) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || (a.featured && b.featured ? (a.featuredOrder ?? 99) - (b.featuredOrder ?? 99) : 0) || b.date.localeCompare(a.date));
-  const previewEntries = [
-    ...entries.filter(([, project]) => project.featured),
-    ...entries.filter(([, project]) => !project.featured).slice(0, 3)
-  ];
-  const canExpand = filter === 'all' && entries.length > previewEntries.length;
+  const previewEntries = entries.filter(([, project]) => project.featured);
+  const canExpand = Object.values(projects).some(project => !project.featured);
   const visibleEntries = canExpand && !projectsExpanded ? previewEntries : entries;
   grid.innerHTML = visibleEntries.map(([id, project]) => {
     return '<article class="project-card' + (project.featured ? ' project-featured project-featured-' + escapeHtml(project.featuredTone || 'green') : '') + '"><div class="project-date">' + escapeHtml(project.date) + '</div>' +
@@ -58,7 +63,7 @@ function renderProjects(filter = 'all') {
 projectToggle.addEventListener('click', () => {
   const scrollPosition = window.scrollY;
   projectsExpanded = !projectsExpanded;
-  renderProjects();
+  renderProjects(projectsExpanded ? activeProjectFilter : 'all');
   if (projectsExpanded) {
     window.scrollTo({top: scrollPosition, behavior: 'instant'});
   } else {
@@ -67,12 +72,6 @@ projectToggle.addEventListener('click', () => {
 });
 
 filters.forEach(button => button.addEventListener('click', () => {
-  filters.forEach(filter => {
-    const active = filter === button;
-    filter.classList.toggle('active', active);
-    filter.setAttribute('aria-pressed', String(active));
-  });
-  projectsExpanded = false;
   renderProjects(button.dataset.filter);
 }));
 
