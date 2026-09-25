@@ -129,21 +129,65 @@ const projects = {
                 tags: ['Python', 'FRED-MD', 'Real-time Vintage', 'PCA', 'K-means', 'Markov Chain', 'Ridge', 'Black–Litterman', 'MVO', 'Rolling Backtest']
             },
             2: {
-                icon: '📄',
-                gradient: 'linear-gradient(135deg, #134e5e 0%, #71b280 100%)',
-                image: 'images/10k.webp',
                 date: '2025.09',
-                title: '10-K Report 기반 기업 유사도 분석 시스템',
+                title: '10-K 보고서 기반의 기업 관계 연구 - 공시 텍스트로 찾는 산업분류 밖의 관계',
                 github: 'https://github.com/financeis/10-K-Report-Similarity',
-                desc: 'SEC 10-K 보고서의 Business(Item 1) 및 Risk Factors(Item 1A) 섹션을 추출하여 OpenAI 임베딩 모델을 통해 기업 간 유사도를 계산하는 NLP 시스템.',
+                caseStudy: 'ten-k/index.html',
+                categories: ['data'],
+                typeLabel: '금융 NLP · 기업 관계 분석 · 실증 연구',
+                discipline: 'Corporate similarity & economic connections',
+                abstract: '사업이 비슷한 기업은 주가도 함께 움직일까? S&P 500 중 476개 기업의 10-K로 유사도를 계산하고, 다음 해 주가로 검증했습니다. TF-IDF와 임베딩을 결합해 산업분류 밖의 연결을 찾고, 공시의 근거 문장으로 경쟁·공급·협력 관계를 살펴보는 연구입니다.',
+                desc: '산업분류만으로는 공급망이나 업종을 넘는 사업 연결을 충분히 설명하기 어렵습니다. SEC EDGAR에서 10-K를 수집하고, 사업 설명(Item 1)을 기업 벡터로 바꿔 비교 대상을 찾았습니다. TF-IDF·로컬 SBERT·OpenAI 임베딩과 앙상블을 같은 평가 기준으로 비교하고, 2024년 제출 공시로 찾은 기업들이 2025년에도 함께 움직였는지 시장 영향을 제거한 수익률 상관으로 검증했습니다. 유사도 점수와 실제 사업 관계를 구분하기 위해 공시의 회사 이름 언급, 관계 판정, 근거 문장 검수까지 연결했습니다.',
+                research: {
+                    heading: '기업을 찾는 방법과 결과를 검증하는 방법',
+                    facts: [
+                        { value: '476개 기업', label: 'S&P 500 내 공통 분석 표본' },
+                        { value: '0.318', label: '앙상블 상위 5개 이웃의 잔차상관' },
+                        { value: '+0.102', label: '서브산업 밖 이웃: 같은 섹터·다른 서브산업 평균 대비' }
+                    ],
+                    approaches: [
+                        {
+                            label: '01 / DISCOVER',
+                            title: '공시를 비교 가능한 기업 벡터로',
+                            description: 'EDGAR 수집부터 정제·품질 판정, 임베딩, 이웃 탐색까지 설정 파일로 실행하는 파이프라인을 구성했습니다.',
+                            points: [
+                                '표·쪽번호·머리글을 제거하고 추출 오류가 있는 문서를 제외',
+                                'TF-IDF, MiniLM, mpnet, OpenAI를 비교하고 Item 1A를 별도 대조군으로 평가',
+                                '청크 길이와 평균 벡터 제거 효과를 비교하고, 기업쌍 유사도의 백분위를 평균해 앙상블 구성',
+                                '단계별 캐시와 CLI로 중단 지점부터 재실행하고 결과 리포트를 자동 생성'
+                            ]
+                        },
+                        {
+                            label: '02 / VALIDATE',
+                            title: '분류표 밖의 연결도 의미가 있을까',
+                            description: '산업분류 재현은 최소 조건으로 두고, 공시 제출 이후의 주가 동조성을 핵심 평가 지표로 삼았습니다.',
+                            points: [
+                                'GICS·SIC의 P@k·AUC와 다음 해 일별 수익률 잔차상관을 함께 평가',
+                                '자기 기업을 제외한 동일가중 시장 수익률로 시장 공통 움직임 제거',
+                                '서브산업 밖 이웃만 고르는 실험과 GICS 통제 회귀로 추가 정보 확인',
+                                '기업 단위 부트스트랩 1,000회와 짝지은 차이로 95% 신뢰구간 산출'
+                            ]
+                        }
+                    ]
+                },
+                backtest: {
+                    image: 'ten-k/assets/peer-validation.svg',
+                    title: '텍스트로 고른 기업들은 실제로 함께 움직였을까?',
+                    caption: '2024년 제출 10-K → 2025년 일별 수익률. 점은 상위 5개 이웃의 평균 잔차상관, 선은 기업 단위 부트스트랩 95% 신뢰구간입니다. GICS 기준선은 같은 서브산업 기업 전체를 사용합니다. 공개 결과표를 재시각화했습니다.',
+                    source: 'https://github.com/financeis/10-K-Report-Similarity/blob/main/reports/sp500_2024.md'
+                },
+                highlightsTitle: '결과와 해석',
                 highlights: [
-                    'SEC API를 통한 S&P 500 기업 10-K 보고서 자동 수집',
-                    '텍스트 청킹(8000자, 500자 오버랩)을 통한 대용량 문서 처리',
-                    'OpenAI text-embedding-3 모델 기반 임베딩 벡터 생성',
-                    '코사인 유사도 매트릭스 및 k-NN 알고리즘으로 유사 기업 탐색'
+                    '앙상블의 보완 효과 — TF-IDF + OpenAI의 상위 5개 이웃 잔차상관은 0.318로, TF-IDF보다 0.013 높았습니다(차이의 95% 신뢰구간 0.007~0.019). 서브산업 밖에서 고른 이웃도 같은 섹터·다른 서브산업 평균보다 0.102 높았습니다.',
+                    '입력 설계의 중요성 — 같은 OpenAI 모델에서 최대 8천 토큰 청크를 쓰면 잔차상관이 0.188이었지만, 앞 1,536토큰을 384토큰씩 나누면 0.307이었습니다(모두 평균 벡터 제거). 모델 이름만큼 입력 범위와 청크 설계가 중요했습니다.',
+                    '근거를 확인하는 관계도 — 텍스트 유사도 상위 기업과 공시의 회사 이름 언급을 합쳐 후보를 만들고, 경쟁·공급·협력·지분 관계의 근거 문장을 보여주는 React·FastAPI 웹앱을 구현했습니다. 불확실한 판정은 사람이 검수하며, 웹앱은 개발 중입니다.',
+                    '관계 라벨의 해석 — 경쟁 502쌍과 공급·협력 452쌍을 분석했지만, GICS와 텍스트 유사도를 통제하면 관계 라벨의 추가 동조성은 뚜렷하지 않았습니다. 관계도는 연결의 이유를 원문으로 확인하는 데 의미가 있습니다.',
+                    '검증 범위 — 상위 5개 텍스트 이웃은 GICS 서브산업 전체 기준선(0.359)에 못 미쳤습니다. 현재 기업 목록·산업분류를 사용해 생존 편향이 남고, 단일 연도 주가 동조성 검증이므로 초과수익이나 인과관계를 입증한 결과는 아닙니다.'
                 ],
-                tags: ['Python', 'OpenAI API', 'SEC API', 'Embedding', 'Cosine Similarity', 'k-NN']
+                tags: ['Python', 'SEC EDGAR', 'TF-IDF', 'Sentence-BERT', 'OpenAI Embeddings', 'Bootstrap', 'FastAPI', 'React', 'SQLite'],
+                cardTags: ['Financial NLP', 'Peer Discovery', 'Empirical Validation']
             },
+
             3: {
                 icon: '📊',
                 gradient: 'linear-gradient(135deg, #4a1942 0%, #8e2de2 100%)',
@@ -228,8 +272,7 @@ const projects = {
 
 // Display metadata emphasizes macro research and investment strategy.
 const presentation = {
-  1: { categories: ['strategy'], typeLabel: '논문 재구현 · 거시경제 기반 투자전략 연구', discipline: 'Regime-based allocation & empirical validation', abstract: '거시지표로 경기국면을 판별해 섹터 ETF 비중을 정하는 논문을 구현하고 검증했습니다. 논문이 사후에 개정된 경제지표로 과거를 평가한다는 점을 발견해 당시 실제로 발표돼 있던 자료만 쓰도록 바꿨고, 그러자 논문에서 가장 좋았던 Ridge 모형의 우위가 사라졌습니다.', cardTags: ['Regime Detection', 'Asset Allocation', 'Look-ahead Bias'] },
-  2: { categories: ['data'], typeLabel: '기업 공시 분석', discipline: 'Corporate disclosure analysis', abstract: 'SEC 10-K 보고서의 사업 내용과 위험요인을 텍스트로 분석하여 기업 간 유사성을 비교하는 시스템 구현. 공시 자료의 수집·처리와 기업 비교 분석에 활용.', cardTags: ['Corporate Disclosures', 'Risk Factors', 'Text Analysis'] },
+  1: { categories: ['strategy'], typeLabel: '논문 재구현 · 거시경제 기반 투자전략 연구', discipline: 'Regime-based allocation & empirical validation', abstract: '거시지표로 경기국면을 판별해 섹터 ETF 비중을 정하는 논문을 구현하고 검증했습니다. 논문이 사후에 개정된 경제지표로 과거를 평가한다는 점을 발견해 당시 실제로 발표돼 있던 자료만 쓰도록 바꿨습니다. 이를 통해 논문의 백테스트 결과를 반박 및 수정했습니다.', cardTags: ['Regime Detection', 'Asset Allocation', 'Look-ahead Bias'] },
   3: { categories: ['strategy', 'data'], typeLabel: '주식시장 데이터 분석', discipline: 'Market data analysis', abstract: 'KOSPI와 S&P 500 주식의 기술적 지표 및 재무 조건을 활용한 종목 스크리닝 시스템 구현. 시장 상태에 따른 지표 가중치 조절 및 투자 대상 탐색.', cardTags: ['Market Indicators', 'Financial Screening', 'Investment Analysis'] },
   4: { categories: ['strategy'], typeLabel: '교내금융학회 활동 · 세미나 발표', discipline: 'Asset allocation seminar', abstract: '전략적·전술적 자산배분의 개념과 주식·채권 등 자산군별 포트폴리오 구성 방법 발표. 평균-분산 최적화의 한계를 검토하고 Black-Litterman 모형 구현.', cardTags: ['Asset Allocation', 'Portfolio Construction', 'Black-Litterman'] },
   5: { categories: ['strategy', 'award'], typeLabel: '투자 대회 · 한국 본선 진출', discipline: 'Investment competition', abstract: 'WorldQuant International Quant Championship 한국 본선 진출 및 컨설턴트 자격 획득. 옵션·기술적·대체 데이터를 활용한 투자전략 개발 및 평가.', cardTags: ['Investment Strategies', 'Market Data', 'Alternative Data'] },

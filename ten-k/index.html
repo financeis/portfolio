@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7f2">
+  <meta name="description" content="476개 기업의 SEC 10-K로 찾은 사업 유사성과 산업분류 밖의 연결. 텍스트 모델 비교, 다음 해 주가 검증, 근거 문장 기반 기업 관계 연구.">
+  <title>10-K 기업 연결 연구 | 김용운 Portfolio</title>
+  <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 바로가기</a>
+  <header><a href="../index.html#portfolio">← Portfolio</a><span>RESEARCH NOTE / 2025.09</span></header>
+  <main id="main">
+    <section class="hero">
+      <p class="eyebrow">FINANCIAL NLP / SEC 10-K</p>
+      <h1>산업분류 밖의 연결을<br>공시에서 찾다.</h1>
+      <p class="lead">사업이 비슷한 기업은 주가도 함께 움직일까?</p>
+      <p class="intro">기업의 사업 설명을 비교해 새로운 비교 기업을 찾고, 그 연결이 실제로 의미가 있는지 검증했습니다. 공시 수집부터 텍스트 모델 비교, 주가 동조성 분석, 근거 문장을 확인하는 기업 관계도까지 연결한 연구입니다.</p>
+      <div class="links"><a class="primary" href="#results">연구 결과 보기 ↓</a><a href="https://github.com/financeis/10-K-Report-Similarity" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+      <dl class="stats"><div><dt>공통 분석 표본</dt><dd>476<span>개 기업</span></dd></div><div><dt>텍스트 자료</dt><dd>2024<span>년 제출 10-K</span></dd></div><div><dt>주가 검증 구간</dt><dd>2025<span>년 일별 수익률</span></dd></div></dl>
+    </section>
+    <nav aria-label="연구 목차"><a href="#question">01 질문</a><a href="#method">02 설계</a><a href="#results">03 결과</a><a href="#relations">04 관계와 근거</a><a href="#limits">05 해석</a></nav>
+
+    <section id="question" class="chapter">
+      <p class="eyebrow">01 / RESEARCH QUESTION</p><h2>같은 업종이라는 말로<br>설명되지 않는 기업들.</h2>
+      <div class="columns"><p>산업분류는 기업을 비교하는 좋은 출발점입니다. 하지만 고객·공급사나 서로 다른 업종의 경쟁 기업까지 모두 같은 분류로 묶이지는 않습니다. 10-K의 사업 설명에서 이런 연결을 찾을 수 있는지 살펴봤습니다.</p><p>분류를 얼마나 잘 재현하는지만 평가하면, 업종 밖의 유의미한 연결도 오답이 됩니다. 그래서 <strong>공시 이후의 주가 동조성</strong>과 <strong>산업분류 밖에서 찾은 이웃</strong>을 핵심 검증 대상으로 삼았습니다.</p></div>
+      <aside class="example"><p class="eyebrow">A CONNECTION BEYOND THE LABEL</p><div class="pair"><strong>Apple <small>AAPL</small></strong><span aria-hidden="true">↔</span><strong>Skyworks <small>SWKS</small></strong></div><p>TF-IDF가 Apple의 가장 가까운 이웃으로 찾은 부품 공급사. 두 기업의 시장 영향을 제거한 수익률 상관은 <strong>0.27</strong>로, Apple의 비교 대상 475개 기업 중 2위였습니다.</p><a href="https://github.com/financeis/10-K-Report-Similarity/blob/main/README.md" target="_blank" rel="noopener noreferrer">사례와 해석 출처 ↗</a></aside>
+    </section>
+
+    <section id="method" class="chapter">
+      <p class="eyebrow">02 / RESEARCH DESIGN</p><h2>수집부터 검증까지,<br>다시 실행할 수 있도록.</h2>
+      <ol class="pipeline"><li><span>01</span><strong>수집·정제</strong><p>EDGAR의 Item 1·1A<br>추출 오류·짧은 문서 판정</p></li><li><span>02</span><strong>기업 벡터</strong><p>TF-IDF · SBERT · OpenAI<br>청크·평균 벡터 제거 비교</p></li><li><span>03</span><strong>이웃 탐색</strong><p>코사인 유사도<br>백분위 평균 앙상블</p></li><li><span>04</span><strong>실증 평가</strong><p>GICS·SIC 분류 재현<br>다음 해 수익률 동조성</p></li></ol>
+      <div class="columns"><article><h3>사업과 위험요인을 구분</h3><p>사업 설명(Item 1)을 기본 입력으로 두고 위험요인(Item 1A)은 별도로 비교했습니다. 표·쪽번호·머리글을 정리하되 대소문자를 유지하고, 잘못 추출된 문서는 품질 판정으로 걸러냈습니다.</p></article><article><h3>복잡한 모델에도 같은 기준선</h3><p>단어 빈도 기반 TF-IDF를 기준으로 MiniLM, mpnet, OpenAI를 평가했습니다. 임베딩의 평균 벡터를 뺀 뒤 유사도를 계산하고, 서로 척도가 다른 점수는 기업쌍 백분위로 바꿔 결합했습니다.</p></article><article><h3>시장 전체가 오른 효과를 분리</h3><p>각 기업을 제외한 유니버스 동일가중 수익률로 시장 요인을 제거했습니다. GICS를 통제한 기업쌍 회귀와 기업 단위 부트스트랩으로 분류 이상의 정보와 추정 불확실성을 확인했습니다.</p></article><article><h3>실험 조건과 결과를 함께 보관</h3><p>YAML 설정, 단계별 캐시, CLI로 수집·임베딩·평가를 분리했습니다. 중단한 작업을 이어 실행할 수 있고, 지표와 Markdown 리포트를 같은 실험 이름으로 저장합니다.</p></article></div>
+    </section>
+
+    <section id="results" class="chapter">
+      <p class="eyebrow">03 / EMPIRICAL RESULTS</p><h2>단어와 문맥을 함께 볼 때,<br>더 좋은 이웃을 찾았습니다.</h2>
+      <p class="section-intro">상위 5개 이웃의 평균 잔차상관은 TF-IDF + OpenAI 앙상블에서 0.318이었습니다. TF-IDF 대비 차이는 +0.013, 짝지은 차이의 95% 신뢰구간은 +0.007~+0.019입니다.</p>
+      <figure><a href="assets/peer-validation.svg" target="_blank" rel="noopener noreferrer" aria-label="모델 비교 차트 원본 크게 보기"><img src="assets/peer-validation.svg" width="1100" height="650" alt="상위 5개 이웃 잔차상관: 앙상블 0.318, OpenAI 짧은 입력 0.307, TF-IDF 0.305, MiniLM 0.290, OpenAI 긴 청크 0.188. GICS 서브산업 전체 기준선 0.359."></a><figcaption>점은 평균, 선은 기업 단위 부트스트랩 95% 신뢰구간. 임베딩은 평균 벡터 제거 적용. GICS는 이웃 5개가 아닌 같은 서브산업 전체 기준선입니다. <a href="https://github.com/financeis/10-K-Report-Similarity/blob/main/reports/sp500_2024.md" target="_blank" rel="noopener noreferrer">결과표 원문 ↗</a></figcaption></figure>
+      <div class="findings"><article><span class="number">+0.102</span><h3>서브산업 밖에서도 남는 연결</h3><p>앙상블로 자기 서브산업 밖에서만 고른 상위 5개 이웃은 같은 섹터·다른 서브산업 기업 평균보다 잔차상관이 0.102 높았습니다.</p></article><article><span class="number">0.188 → 0.307</span><h3>입력 범위와 청크 길이의 영향</h3><p>같은 OpenAI 모델에서도 최대 8천 토큰 청크와 앞 1,536토큰을 384토큰씩 나눈 입력의 결과는 크게 달랐습니다. 두 조건 모두 평균 벡터를 제거했습니다.</p></article><article><span class="number">0.305</span><h3>강력했던 단어 빈도 기준선</h3><p>TF-IDF는 로컬 임베딩보다 나았고, 짧은 입력의 OpenAI와는 유의한 차이가 없었습니다. 복잡한 모델을 쓰는 것 자체가 성과를 보장하지 않았습니다.</p></article></div>
+      <details><summary>수치와 신뢰구간 자세히 보기</summary><div class="table-wrap"><table><caption>상위 5개 이웃의 잔차상관 · 기업 단위 95% 신뢰구간</caption><thead><tr><th scope="col">방법</th><th scope="col">평균</th><th scope="col">95% 구간</th></tr></thead><tbody><tr><th scope="row">TF-IDF + OpenAI</th><td>0.318</td><td>0.303–0.333</td></tr><tr><th scope="row">OpenAI / 앞 1,536토큰 + center</th><td>0.307</td><td>0.290–0.322</td></tr><tr><th scope="row">TF-IDF</th><td>0.305</td><td>0.291–0.320</td></tr><tr><th scope="row">MiniLM / Item 1 전체 + center</th><td>0.290</td><td>0.275–0.304</td></tr><tr><th scope="row">OpenAI / 최대 8천 토큰 청크 + center</th><td>0.188</td><td>0.174–0.205</td></tr><tr><th scope="row">같은 GICS 서브산업 전체</th><td>0.359</td><td>0.340–0.380</td></tr></tbody></table></div></details>
+    </section>
+
+    <section id="relations" class="chapter">
+      <p class="eyebrow">04 / RELATIONS & EVIDENCE</p><h2>비슷하다는 점수에서,<br>연결된 이유를 읽는 도구로.</h2>
+      <p class="section-intro">유사도는 관계 유형을 설명하지 않습니다. 공시의 회사 이름 언급과 주변 문맥을 판정하고, 관계별 근거 문장을 확인하는 React·FastAPI 웹앱을 구현했습니다. 현재 개발 중이며, 경쟁·공급·협력 판정은 확인 표본으로 검증했습니다.</p>
+      <div class="evidence-flow" aria-label="기업 관계도 처리 흐름"><article><span>후보</span><h3>유사도 상위 20 ∪ 이름 언급</h3><p>텍스트가 비슷한 기업에 공시에 직접 등장한 기업을 더해 후보 누락을 줄입니다.</p></article><article><span>판정</span><h3>회사 식별 → 관계 유형</h3><p>근거 문장과 앞뒤 문단으로 경쟁·공급·협력·지분을 판정합니다. 이름만 같은 경우를 구분합니다.</p></article><article><span>확인</span><h3>관계도 → 원문 → 사람의 검수</h3><p>관계와 근거를 함께 보여주고 불확실한 판정은 검수 대기로 남깁니다. 검수 기록은 별도 DB에 보관합니다.</p></article></div>
+      <figure><a href="assets/relation-evidence.svg" target="_blank" rel="noopener noreferrer" aria-label="관계 유형별 차트 원본 크게 보기"><img src="assets/relation-evidence.svg" width="1100" height="570" loading="lazy" alt="경쟁 관계 502쌍의 잔차상관 0.241, 공급·협력 452쌍은 0.130, 회사 언급·관계 아님은 0.097, 모든 기업쌍은 0.005."></a><figcaption>476개 기업, 113,050쌍을 대상으로 한 관계 유형별 분석. 각 기업쌍을 한 번씩 세며 관계 유형은 겹칠 수 있습니다. 위 모델 비교 차트의 기업별 이웃 평균과는 집계 방식이 다릅니다. <a href="https://github.com/financeis/10-K-Report-Similarity/blob/main/reports/relations_sp500_2024.md" target="_blank" rel="noopener noreferrer">관계 분석 원문 ↗</a></figcaption></figure>
+      <aside class="interpretation"><h3>관계가 있다는 사실은 무엇을 더 설명할까?</h3><p>경쟁·공급·협력 관계에 있는 기업들은 함께 움직였습니다. 다만 GICS와 텍스트 유사도를 통제하면 관계 라벨의 추가 효과는 뚜렷하지 않았습니다. 관계도는 독립적인 수익 신호라고 보기보다, <strong>텍스트가 찾은 연결의 이유를 원문으로 확인하는 도구</strong>로 해석했습니다.</p></aside>
+    </section>
+
+    <section id="limits" class="chapter">
+      <p class="eyebrow">05 / INTERPRETATION</p><h2>프로젝트 시사점</h2>
+      <div class="columns"><article><h3>산업분류를 보완하는 비교 기업 탐색</h3><p>텍스트는 분류표 밖에서도 함께 움직이는 기업을 찾았습니다. 그러나 상위 5개 이웃 평균은 같은 GICS 서브산업 전체 기준선 0.359보다 낮았습니다. 산업분류를 대체한다는 결론보다, 기존 분류에 새로운 비교 대상을 더하는 접근이 적절합니다.</p></article><article><h3>동조성 검증의 범위</h3><p>현재 기업 목록·GICS를 과거 공시에 적용해 생존 편향이 남습니다. 2025년 한 해의 상관관계는 초과수익이나 인과관계의 증거가 아니며, 서로 반대로 움직이는 경쟁 관계는 이 지표에서 과소평가될 수 있습니다.</p></article></div>
+      <p class="closing">이 연구에서 중요했던 것은 가장 큰 모델을 고르는 일이 아니라, 기업 비교에 필요한 정보를 정의하고 그 정보가 실제로 유효한지 확인하는 일이었습니다.</p>
+      <div class="sources"><h3>코드와 연구 자료</h3><a href="https://github.com/financeis/10-K-Report-Similarity" target="_blank" rel="noopener noreferrer">저장소 ↗</a><a href="https://github.com/financeis/10-K-Report-Similarity/blob/main/docs/methodology.md" target="_blank" rel="noopener noreferrer">방법론 ↗</a><a href="https://github.com/financeis/10-K-Report-Similarity/blob/main/reports/sp500_2024.md" target="_blank" rel="noopener noreferrer">모델 비교 결과 ↗</a><a href="https://github.com/financeis/10-K-Report-Similarity/blob/main/reports/relations_sp500_2024.md" target="_blank" rel="noopener noreferrer">관계 유형별 분석 ↗</a><p>그림은 저장소에 공개된 결과표를 바탕으로 재구성했습니다.</p></div>
+    </section>
+  </main>
+  <footer><a href="../index.html#portfolio">← 포트폴리오로 돌아가기</a><span>김용운 / 10-K Report Similarity</span></footer>
+</body>
+</html>

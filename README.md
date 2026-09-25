@@ -57,6 +57,17 @@ node server.mjs
 
 내용은 [원본 저장소 README](https://github.com/financeis/Seminar_final)와 [재구현 보고서](https://github.com/financeis/Seminar_final/blob/master/reports/reproduction/report/report.md)를 확인해 작성했습니다. 이번 소개 수정 과정에서 백테스트를 새로 실행하지는 않았습니다. 전체 기본실험의 저장 결과와 짧은 구간의 대조·민감도 검사를 구분하며, 실제 최초 발표 시각·원자료 차이·Ridge 내부 검증 가정·비용 0 가정·최신 코드 전체 재실행의 한계를 명시합니다.
 
+## 10-K 기업 연결 연구
+
+`projects.js`의 2번 항목과 `ten-k/index.html`에서 공시 기반 비교 기업 탐색, 다음 해 주가 동조성 검증, 근거 문장 기반 기업 관계 분석을 소개합니다. 표시 날짜는 `2025.09`를 유지합니다.
+
+- `ten-k/case-study.css`: 연구 상세 페이지의 반응형 스타일
+- `ten-k/assets/peer-validation.svg`: 모델별 상위 5개 이웃 잔차상관 및 95% 신뢰구간
+- `ten-k/assets/relation-evidence.svg`: 관계 유형별 기업쌍 잔차상관 및 95% 신뢰구간
+- `ten-k/assets/generate_figures.py`: 공개 결과표에서 두 그림을 다시 생성하는 Matplotlib 스크립트. 한글 글꼴(Malgun Gothic, Noto Sans CJK KR, AppleGothic 중 하나)이 필요합니다.
+
+출처는 [10-K Report Similarity](https://github.com/financeis/10-K-Report-Similarity)의 커밋 `9e7e39c76ce5633e6985a79ce97ab8a6b9f43e7d`입니다. README, `configs/sp500_2024.yaml`, `reports/sp500_2024.md`, `reports/relations_sp500_2024.md`와 구현 코드를 기준으로 작성했습니다. 그림은 결과표의 재시각화이며 실제 웹앱 캡처가 아닙니다. 이번 포트폴리오 편집에서 원본 실험을 재실행하지 않았습니다. 모델 비교는 기업별 이웃 평균, 관계 분석은 기업쌍 평균으로 집계 방식이 다릅니다. 웹앱 개발 중 상태, 생존 편향과 단일 연도 검증의 범위를 본문에 반영했습니다.
+
 ## 배포
 
 배포 주소: [김용운 Portfolio](https://financeis.github.io/portfolio/)
