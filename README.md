@@ -57,16 +57,20 @@ node server.mjs
 
 내용은 [원본 저장소 README](https://github.com/financeis/Seminar_final)와 [재구현 보고서](https://github.com/financeis/Seminar_final/blob/master/reports/reproduction/report/report.md)를 확인해 작성했습니다. 이번 소개 수정 과정에서 백테스트를 새로 실행하지는 않았습니다. 전체 기본실험의 저장 결과와 짧은 구간의 대조·민감도 검사를 구분하며, 실제 최초 발표 시각·원자료 차이·Ridge 내부 검증 가정·비용 0 가정·최신 코드 전체 재실행의 한계를 명시합니다.
 
-## 10-K 기업 연결 연구
+## 10-K 기업 관계 지도
 
-`projects.js`의 2번 항목과 `ten-k/index.html`에서 공시 기반 비교 기업 탐색, 다음 해 주가 동조성 검증, 근거 문장 기반 기업 관계 분석을 소개합니다. 표시 날짜는 `2025.09`를 유지합니다.
+`projects.js`의 2번 항목과 `ten-k/index.html`에서 산업분류로 잡아내기 어려운 기업 간 관계를 포착하는 프로젝트를 소개합니다. 표시 날짜는 `2025.09`를 유지합니다. 목적·설계·실제 구현·2024/2025년 관계 비교·활용 순서로 구성하고, 구현한 기능과 산출물을 완결형으로 서술합니다. 주가 동조성은 목적이 아닌 보조 분석으로만 언급합니다.
 
-- `ten-k/case-study.css`: 연구 상세 페이지의 반응형 스타일
-- `ten-k/assets/peer-validation.svg`: 모델별 상위 5개 이웃 잔차상관 및 95% 신뢰구간
-- `ten-k/assets/relation-evidence.svg`: 관계 유형별 기업쌍 잔차상관 및 95% 신뢰구간
-- `ten-k/assets/generate_figures.py`: 공개 결과표에서 두 그림을 다시 생성하는 Matplotlib 스크립트. 한글 글꼴(Malgun Gothic, Noto Sans CJK KR, AppleGothic 중 하나)이 필요합니다.
+- `ten-k/case-study.css`: 상세 페이지 반응형 스타일
+- `ten-k/assets/nvidia-relations.webp`: NVIDIA 관계도와 TSMC 공급·협력 근거
+- `ten-k/assets/cross-sector.webp`: 다른 GICS 섹터의 기업 필터와 NVIDIA–Amazon 경쟁 근거
+- `ten-k/assets/filing-context.webp`: TSMC 근거 문장을 강조한 공시 본문
 
-출처는 [10-K Report Similarity](https://github.com/financeis/10-K-Report-Similarity)의 커밋 `9e7e39c76ce5633e6985a79ce97ab8a6b9f43e7d`입니다. README, `configs/sp500_2024.yaml`, `reports/sp500_2024.md`, `reports/relations_sp500_2024.md`와 구현 코드를 기준으로 작성했습니다. 그림은 결과표의 재시각화이며 실제 웹앱 캡처가 아닙니다. 이번 포트폴리오 편집에서 원본 실험을 재실행하지 않았습니다. 모델 비교는 기업별 이웃 평균, 관계 분석은 기업쌍 평균으로 집계 방식이 다릅니다. 웹앱 개발 중 상태, 생존 편향과 단일 연도 검증의 범위를 본문에 반영했습니다.
+세 이미지는 로컬 웹앱의 2024년 제출 공시 화면을 1600×1100 해상도로 직접 촬영했습니다. 정적 이미지이므로 공개 페이지에서 로컬 서버나 API 연결이 필요하지 않습니다. 이미지를 누르면 원본 크기로 열립니다.
+
+연도 비교 수치는 원본 프로젝트의 `reports/relations_changes_sp500_2025.md`(생성 2026-09-26) 기준입니다. 2025년 관계 분석 대상 494개사, 경쟁 546개·공급·협력 509개(익명 고객 제외, 유형별 집계), 공통 유사도 표본 472개사의 상위 20개 이웃 유지율 평균 88%를 사용했습니다. 웹앱 캡처와 비교 리포트의 집계 기준·연도는 각각 명시합니다. 원본 실험은 이번 편집에서 재실행하지 않았습니다.
+
+기존 `peer-validation.svg`, `relation-evidence.svg`와 생성 스크립트는 자료로 보존하며 소개 페이지에서는 사용하지 않습니다.
 
 ## 배포
 

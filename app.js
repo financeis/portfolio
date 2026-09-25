@@ -44,7 +44,7 @@ function renderProjects(filter = 'all') {
       '<p class="project-methods"><span>Topics:</span> ' + (project.cardTags || project.tags).map(escapeHtml).join(', ') + '</p>' +
       (project.logo && project.caseStudy ? '<a class="project-logo-link" href="' + escapeHtml(project.caseStudy) + '" aria-label="Research Desk 상세 페이지 보기"><img src="' + escapeHtml(project.logo) + '" width="174" height="42" alt="ResearchDesk — Your Research Workspace"></a>' : '') +
       '<div class="project-links"><button type="button" class="project-button" data-project="' + escapeHtml(id) + '" aria-haspopup="dialog" aria-label="' + escapeHtml(project.title) + ' 상세 보기">상세 내용</button>' +
-      (project.caseStudy ? '<a class="case-study-link" href="' + escapeHtml(project.caseStudy) + '">' + (id === '2' ? '연구·결과 살펴보기 ↗' : '화면·구현 살펴보기 ↗') + '</a>' : '') +
+      (project.caseStudy ? '<a class="case-study-link" href="' + escapeHtml(project.caseStudy) + '">' + (id === '2' ? '관계도·구현 살펴보기 ↗' : '화면·구현 살펴보기 ↗') + '</a>' : '') +
       (project.github ? '<a href="' + escapeHtml(project.github) + '" target="_blank" rel="noopener noreferrer">Code ↗</a>' : '') + '</div></div></article>';
   }).join('');
   document.querySelector('#project-count').textContent = visibleEntries.length < entries.length
@@ -87,7 +87,7 @@ function openProject(id, trigger) {
     (project.image ? '<img class="dialog-image" src="' + escapeHtml(project.image) + '" alt="' + escapeHtml(project.title) + ' 원본 자료">' : '') +
     '<h3>' + escapeHtml(project.highlightsTitle || '주요 내용') + '</h3><ul>' + project.highlights.map(item => '<li>' + escapeHtml(item) + '</li>').join('') + '</ul>' +
     '<h3>분석 방법 및 도구</h3><div class="tags">' + tagsHtml(project.tags) + '</div>' +
-    (project.caseStudy ? '<a class="button button-primary case-study-button" href="' + escapeHtml(project.caseStudy) + '">' + (String(id) === '2' ? '연구 설계와 결과 보기 ↗' : '실제 화면과 구현 설명 보기 ↗') + '</a>' : '') +
+    (project.caseStudy ? '<a class="button button-primary case-study-button" href="' + escapeHtml(project.caseStudy) + '">' + (String(id) === '2' ? '실제 화면과 관계 분석 보기 ↗' : '실제 화면과 구현 설명 보기 ↗') + '</a>' : '') +
     (project.github ? '<a class="button button-primary" href="' + escapeHtml(project.github) + '" target="_blank" rel="noopener noreferrer">GitHub에서 프로젝트 보기 <span aria-hidden="true">↗</span></a>' : '') + '</div>';
   dialog.showModal();
   document.body.classList.add('dialog-open');
