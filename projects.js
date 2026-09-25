@@ -130,7 +130,7 @@ const projects = {
             },
             2: {
                 date: '2025.09',
-                title: '10-K 기업 관계 지도 — 공시로 찾는 산업분류 밖의 관계',
+                title: '10-K Report 기반의 기업 관계 탐색 시스템',
                 github: 'https://github.com/financeis/10-K-Report-Similarity',
                 caseStudy: 'ten-k/index.html',
                 categories: ['data'],
