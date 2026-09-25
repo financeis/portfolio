@@ -22,7 +22,7 @@ node server.mjs
 
 프로젝트를 추가하려면 `projects` 객체에 새 번호를 추가하세요. 필수 항목은 `date`, `title`, `desc`, `highlights`, `tags`입니다. 목록 표시 속성인 `typeLabel`(연구 유형), `abstract`(요약), `categories`(분류), `discipline`(상세 창 분야), `cardTags`(주요 주제)도 같은 항목 안에 넣을 수 있습니다.
 
-전체 목록은 처음에 대표 프로젝트와 최신 일반 프로젝트 3개를 표시합니다. 하단 버튼으로 전체를 펼치거나 접을 수 있고, 분류 필터에서는 해당 항목을 모두 표시합니다. 필터를 바꾸고 전체로 돌아오면 다시 기본 목록으로 접힙니다. 카드의 설명·주제·링크와 상세 내용은 유지합니다.
+전체 목록은 처음에 대표 프로젝트 3개와 최신 일반 프로젝트 3개를 표시합니다. 대표 프로젝트는 금융 리서치 프로젝트로 표시하며, `featuredOrder`에 따라 Research Desk → 10-K Report → Mini-Factory 순서를 고정합니다. 세 카드에는 녹색·청색·황토색의 옅은 배경을 적용합니다. 하단 버튼으로 전체를 펼치거나 접을 수 있고, 분류 필터에서는 해당 항목을 모두 표시합니다. 필터를 바꾸고 전체로 돌아오면 다시 기본 목록으로 접힙니다. 카드의 설명·주제·링크와 상세 내용은 유지합니다.
 
 - 분류: `strategy`, `data`, `award` (복수 지정 가능)
 - `image`: 상세 창의 원본 이미지 경로 (선택)
@@ -35,7 +35,7 @@ node server.mjs
 프로젝트 목록 첫 항목에서 `research-desk/index.html` 상세 페이지로 이동합니다. 실제 앱의 보고서 비교, 기업 라이브러리, 투자 논리, 커버리지 화면을 탭으로 전환하고 확대할 수 있습니다. 캡처는 정적 이미지이며 실제 앱의 API나 로그인 정보를 사용하지 않습니다.
 
 - `research-desk/`: 소개 페이지와 실제 캡처 6장
-- `research-desk-card.css`: 대표 프로젝트 목록 미리보기 스타일
+- `research-desk-card.css`: 금융 리서치 대표 프로젝트 3개의 색상과 로고 스타일
 - `projects.js`: 7번 항목. `featured`로 우선 표시, `caseStudy`로 상세 페이지 연결, `logo`로 목록 로고 지정
 
 ## Mini-Factory 투자전략 실험 파이프라인
@@ -88,3 +88,5 @@ GitHub 저장소 `financeis/portfolio`의 **Settings → Pages → Deploy from a
 - Google Fonts에 연결되지 않으면 시스템 글꼴을 사용합니다.
 
 배포 상태는 저장소의 **Actions → pages build and deployment** 또는 **Settings → Pages**에서 확인합니다.
+
+10-K의 문서·기업 연결 아이콘은 `ten-k/assets/ten-k-icon.svg`, 목록용 로고는 `ten-k/assets/ten-k-logo.svg`입니다. SVG 벡터로 직접 제작했으며 로고의 크기와 대체 텍스트는 프로젝트 데이터의 `logoWidth`, `logoAlt`에서 지정합니다.

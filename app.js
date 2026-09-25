@@ -27,7 +27,7 @@ function backtestFigureHtml(backtest) {
     '</figure>';
 }
 function renderProjects(filter = 'all') {
-  const entries = Object.entries(projects).filter(([, project]) => filter === 'all' || (project.categories || []).includes(filter)).sort(([, a], [, b]) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || b.date.localeCompare(a.date));
+  const entries = Object.entries(projects).filter(([, project]) => filter === 'all' || (project.categories || []).includes(filter)).sort(([, a], [, b]) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || (a.featured && b.featured ? (a.featuredOrder ?? 99) - (b.featuredOrder ?? 99) : 0) || b.date.localeCompare(a.date));
   const previewEntries = [
     ...entries.filter(([, project]) => project.featured),
     ...entries.filter(([, project]) => !project.featured).slice(0, 3)
@@ -35,14 +35,14 @@ function renderProjects(filter = 'all') {
   const canExpand = filter === 'all' && entries.length > previewEntries.length;
   const visibleEntries = canExpand && !projectsExpanded ? previewEntries : entries;
   grid.innerHTML = visibleEntries.map(([id, project]) => {
-    return '<article class="project-card' + (project.featured ? ' project-featured' : '') + '"><div class="project-date">' + escapeHtml(project.date) + '</div>' +
+    return '<article class="project-card' + (project.featured ? ' project-featured project-featured-' + escapeHtml(project.featuredTone || 'green') : '') + '"><div class="project-date">' + escapeHtml(project.date) + '</div>' +
       '<div class="project-content">' +
-      (project.featured ? '<p class="project-type">' + escapeHtml(project.typeLabel || '대표 프로젝트') + '</p>' : '') +
+      (project.featured ? '<p class="project-type">대표 프로젝트 · 금융 리서치</p>' : '') +
       '<h3>' + escapeHtml(project.title) + '</h3>' +
       (!project.featured ? '<p class="project-type">' + escapeHtml(project.typeLabel || '연구 프로젝트') + '</p>' : '') +
       '<p class="card-description">' + escapeHtml(project.abstract || project.desc) + '</p>' +
       '<p class="project-methods"><span>Topics:</span> ' + (project.cardTags || project.tags).map(escapeHtml).join(', ') + '</p>' +
-      (project.logo && project.caseStudy ? '<a class="project-logo-link" href="' + escapeHtml(project.caseStudy) + '" aria-label="Research Desk 상세 페이지 보기"><img src="' + escapeHtml(project.logo) + '" width="174" height="42" alt="ResearchDesk — Your Research Workspace"></a>' : '') +
+      (project.logo && project.caseStudy ? '<a class="project-logo-link" href="' + escapeHtml(project.caseStudy) + '" aria-label="' + escapeHtml(project.title) + ' 상세 페이지 보기"><img src="' + escapeHtml(project.logo) + '" width="' + escapeHtml(project.logoWidth || 174) + '" height="42" alt="' + escapeHtml(project.logoAlt || project.title) + '"></a>' : '') +
       '<div class="project-links"><button type="button" class="project-button" data-project="' + escapeHtml(id) + '" aria-haspopup="dialog" aria-label="' + escapeHtml(project.title) + ' 상세 보기">상세 내용</button>' +
       (project.caseStudy ? '<a class="case-study-link" href="' + escapeHtml(project.caseStudy) + '">' + (id === '2' ? '관계도·구현 살펴보기 ↗' : '화면·구현 살펴보기 ↗') + '</a>' : '') +
       (project.github ? '<a href="' + escapeHtml(project.github) + '" target="_blank" rel="noopener noreferrer">Code ↗</a>' : '') + '</div></div></article>';
