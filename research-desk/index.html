@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f8f8f3">
-  <meta name="description" content="김용운의 Research Desk 프로젝트. 텔레그램 증권 리포트 수집부터 금융 정보 구조화, 원문 근거 확인, 보고서 간 전망 비교까지 구현한 리서치 워크스페이스.">
+  <meta name="description" content="김용운의 Research Desk 프로젝트. 텔레그램 리포트를 기업·애널리스트·증권사별로 정리하고, 같은 증권사의 과거 대비 전망 변화와 증권사 간 견해 차이를 비교하는 개인 리서치 웹앱.">
   <title>Research Desk — 김용운의 리서치 프로젝트</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="case-study.css">
+  <link rel="stylesheet" href="case-study.css?v=research-use">
   <script src="case-study.js" defer></script>
 </head>
 <body>
@@ -27,7 +27,7 @@
         <p class="eyebrow">Selected project · 2026</p>
         <h1 id="case-title">Research Desk<span class="title-period">.</span></h1>
         <p class="subtitle">증권 리포트 수집·분석·비교 워크스페이스</p>
-        <p class="lead">텔레그램에 쌓이는 리서치 PDF를 기업별로 정리하고,<br class="desktop-break"> 서로 다른 시점의 실적 추정과 투자 논리를 같은 기준에서 비교합니다.</p>
+        <p class="lead">텔레그램 리포트를 기업·애널리스트·증권사별로 정리하고,<br class="desktop-break"> 같은 증권사의 과거 대비 전망 변화와 증권사 간 견해 차이를 비교합니다.</p>
         <div class="intro-links">
           <a class="primary-link" href="#screens">실제 화면 살펴보기 <span aria-hidden="true">↓</span></a>
           <a href="https://github.com/financeis/telegram_report" target="_blank" rel="noopener noreferrer">Source code <span aria-hidden="true">↗</span></a>
@@ -63,12 +63,12 @@
     </section>
 
     <section class="case-section problem-grid" aria-labelledby="problem-title">
-      <div class="section-label"><span>01 / Research question</span><h2 id="problem-title">보고서는 많은데,<br>전망의 변화는 어떻게 읽을까?</h2></div>
-      <div class="prose"><p>리서치센터들의 텔레그램 채널에 올라오는 리포트들은 발행되는 순서대로 쌓입니다. 기업 하나를 따라가려면 과거 보고서를 다시 찾고, 발행처마다 다른 형식의 목표주가·실적 추정·논거를 직접 맞춰 읽어야 했습니다.</p><p>이 프로젝트는 <strong>‘어떤 자료가 있는가’에서 ‘무엇이 달라졌는가’로 이어지는 리서치 흐름</strong>을 구현한 개인용 웹앱입니다. 금융적으로 비교 가능한 정보 단위를 먼저 정의하고, 그 구조에 맞춰 문서 처리와 화면을 설계했습니다.</p></div>
+      <div class="section-label"><span>01 / Background</span><h2 id="problem-title">텔레그램 리포트를<br>기업별로 정리</h2></div>
+      <div class="prose"><p>증권사 리포트를 모아 올려주는 텔레그램 채널을 이용했습니다. 자료가 시간순으로 쌓이다 보니 관심 기업의 리포트만 골라 읽거나, 같은 증권사가 3개월 전과 6개월 전에 어떤 전망을 내놨는지 확인하려면 과거 자료를 일일이 찾아야 했습니다.</p><p>이 수고를 줄이려고 Research Desk를 만들었습니다. 채널에서 받은 PDF에 기업·애널리스트·증권사 정보를 태깅해 저장하고, 기업별로 리포트를 모아 볼 수 있게 했습니다. 비교할 리포트를 고르면 실적 추정치와 투자 논리의 변화를 원문 근거와 함께 확인할 수 있습니다.</p></div>
     </section>
 
     <section class="case-section" aria-labelledby="comparison-title">
-      <div class="section-top"><div><p class="eyebrow">02 / Comparing like with like</p><h2 id="comparison-title">같은 조건의 숫자와 근거를 함께 비교</h2></div><span>삼성증권 · KB증권 리포트 사례</span></div>
+      <div class="section-top"><div><p class="eyebrow">02 / Report comparison</p><h2 id="comparison-title">시점별 전망 변화와 증권사 간 견해 차이</h2></div><span>삼성증권에 대한 KB증권 리포트 2건</span></div>
       <div class="example-grid">
         <div class="comparison-example">
           <div class="example-heading"><span>보고서 A → 보고서 B</span><strong>2026.02.09 → 2026.05.11</strong></div>
@@ -80,36 +80,36 @@
           <p class="example-note">저장된 보고서의 추정치 변화입니다. 주가 수익률이나 운용 성과를 나타내지 않습니다.</p>
         </div>
         <ol class="principles">
-          <li><span>01</span><div><h3>비교 기준을 먼저 맞춥니다</h3><p>기간·단위·회계 기준·시나리오가 일치하는 실적 추정치만 수치로 비교합니다.</p></div></li>
-          <li><span>02</span><div><h3>전망 수정과 시각 차이를 구분합니다</h3><p>동일 발행처의 시점별 변화와, 서로 다른 발행처 간 견해 차이를 별도로 표시합니다.</p></div></li>
-          <li><span>03</span><div><h3>숫자에서 원문으로 돌아갈 수 있습니다</h3><p>추출한 지표에 근거 문구와 페이지를 연결하고, 검증되지 않은 수치는 표시에서 제외합니다.</p></div></li>
+          <li><span>01</span><div><h3>같은 기준의 실적 추정치 비교</h3><p>기간·단위·회계 기준·시나리오가 일치하는 실적 추정치만 수치로 비교합니다.</p></div></li>
+          <li><span>02</span><div><h3>과거 대비 변화와 증권사 간 차이</h3><p>한 기업에 대해 같은 증권사가 과거 전망을 어떻게 바꿨는지 비교합니다. 서로 다른 증권사의 리포트를 고르면 실적 추정과 투자 논리가 어디서 갈리는지 살펴볼 수 있습니다.</p></div></li>
+          <li><span>03</span><div><h3>수치와 판단 근거를 원문에서 확인</h3><p>추출한 지표에 근거 문구와 페이지를 연결하고, 검증되지 않은 수치는 표시에서 제외합니다.</p></div></li>
         </ol>
       </div>
       <a class="text-link" href="assets/comparison-full.png" target="_blank" rel="noopener">실적 추정 표와 근거까지 담은 전체 비교 화면 보기 ↗</a>
     </section>
 
     <section class="case-section workflow-section" aria-labelledby="workflow-title">
-      <div class="section-top"><div><p class="eyebrow">03 / From source to research</p><h2 id="workflow-title">수집부터 검토까지 연결한 처리 흐름</h2></div></div>
+      <div class="section-top"><div><p class="eyebrow">03 / Implementation</p><h2 id="workflow-title">리포트 수집·태깅·분석 과정</h2></div></div>
       <ol class="pipeline">
         <li><span>01</span><h3>PDF 수집</h3><p>텔레그램 채널의 새 문서 다운로드</p><small>Telethon</small></li>
-        <li><span>02</span><h3>분류·기업 매핑</h3><p>보고서 유형·발행처·KRX 종목 정리</p><small>LangGraph</small></li>
+        <li><span>02</span><h3>메타데이터 태깅</h3><p>기업·애널리스트·증권사·보고서 유형 정리</p><small>LangGraph</small></li>
         <li><span>03</span><h3>금융 정보 추출</h3><p>선택한 보고서의 실적·논리·밸류에이션 구조화</p><small>LLM · Structured output</small></li>
         <li><span>04</span><h3>근거 검증·저장</h3><p>원문 근거 확인 및 분석 결과 재사용</p><small>PyMuPDF · Supabase</small></li>
         <li><span>05</span><h3>조회·비교</h3><p>기업 라이브러리와 두 보고서의 변화 비교</p><small>React · FastAPI</small></li>
       </ol>
       <div class="implementation-grid">
         <article><h3>필요한 보고서만 분석</h3><p>사용자가 체크한 보고서만 LLM 분석에 보냅니다. 기존 분석 재사용, 진행 표시, 남은 작업 중지와 실패 건 재시도를 지원합니다.</p></article>
-        <article><h3>문서 탐색에서 산업 흐름까지</h3><p>기업별 라이브러리와 발행처 비중, 산업·제품별 커버리지, 유형별 발행량을 하나의 화면 체계로 통합했습니다.</p></article>
-        <article><h3>사람이 확인하는 검토 경로</h3><p>자동 분류가 어려운 자료는 PDF 미리보기와 함께 검토합니다. 승인·대상 제외·재태깅·되돌리기로 결과를 정리합니다.</p></article>
+        <article><h3>기업별 리포트와 발행 현황 조회</h3><p>기업별 리포트 목록에서 자료를 찾고, 증권사별 비중과 산업·제품별 커버리지, 보고서 유형별 발행량을 확인합니다.</p></article>
+        <article><h3>자동 분류 결과 검토·수정</h3><p>자동 분류가 어려운 자료는 PDF 미리보기와 함께 검토합니다. 승인·대상 제외·재태깅·되돌리기로 결과를 정리합니다.</p></article>
       </div>
     </section>
 
     <section class="case-section closing-grid" aria-labelledby="reflection-title">
       <div>
-        <p class="eyebrow">04 / Contribution & scope</p><h2 id="reflection-title">금융적 판단 기준을<br>정보 구조와 화면에 반영</h2>
-        <p class="reflection">어떤 숫자를 비교할 수 있는지, 어떤 논거를 원문에서 확인해야 하는지를 설계의 기준으로 삼았습니다. AI 개발 도구를 활용해 구현하고, 실제 문서·DB·브라우저를 연결하여 동작을 검증했습니다.</p>
-        <dl class="contribution-list"><div><dt>직접 설계한 부분</dt><dd>리서치 작업 흐름, 금융 정보 항목, 비교 기준, UI 구성과 검증 시나리오</dd></div><div><dt>구현 도구</dt><dd>Python · React · FastAPI · Supabase · Telethon · LangGraph · OpenAI API</dd></div><div><dt>현재 구현 범위</dt><dd>국내 주식 리서치 중심의 로컬 웹앱. 텍스트 PDF 분석을 지원하며 이미지 PDF는 별도 검토로 분기합니다.</dd></div></dl>
-        <div class="validation"><strong>373</strong><p>Python 테스트 통과<small>2026.09.15 검증 기록 기준 · 실제 PDF 저장, 분석·비교, 브라우저 동작도 별도 확인</small></p></div>
+        <p class="eyebrow">04 / How I use it</p><h2 id="reflection-title">목표주가 상향의 이유를<br>확인하는 데 활용</h2>
+        <p class="reflection">저는 리포트를 읽을 때 과거 전망에서 무엇이 달라졌는지 먼저 확인합니다. 목표주가는 낙관적으로 제시되는 경우가 많다고 보기 때문에, 적용 멀티플만 높여 목표주가를 올린 리포트는 대체로 걸러 봅니다. 업황이 개선됐거나 투자 포인트가 달라졌다면 그 근거를 읽고 추가 분석을 진행합니다.</p>
+        <p class="reflection">Research Desk에서는 한 기업에 대한 같은 증권사의 3개월 전·6개월 전 리포트와 최신 리포트를 골라 비교했습니다. 다른 증권사는 같은 기업을 어떻게 보고 있는지도 함께 살폈습니다. 기업 분석을 시작할 때 바뀐 전망과 그 이유를 빠르게 확인하는 데 활용했습니다.</p>
+        <dl class="contribution-list"><div><dt>직접 설계한 부분</dt><dd>기업별 리포트 정리, 시점별·증권사별 비교 항목과 화면 구성</dd></div><div><dt>구현 도구</dt><dd>Python · React · FastAPI · Supabase · Telethon · LangGraph · OpenAI API</dd></div><div><dt>지원 범위</dt><dd>국내 주식 리서치 중심의 로컬 웹앱. 텍스트 PDF 분석을 지원하며 이미지 PDF는 별도 검토로 분기합니다.</dd></div></dl>
       </div>
       <figure class="mobile-figure"><div class="mobile-caption"><span>RESPONSIVE WORKSPACE</span><p>기업 리포트 라이브러리 · 모바일</p></div><button type="button" data-zoom="assets/mobile.png" data-caption="모바일 기업 리포트 라이브러리의 실제 화면" aria-label="모바일 화면 크게 보기"><img src="assets/mobile.png" alt="모바일에서 확인하는 삼성증권 리포트 라이브러리" width="390" height="844" loading="lazy"></button></figure>
     </section>
