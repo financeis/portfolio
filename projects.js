@@ -171,10 +171,10 @@ const projects = {
                     ]
                 },
                 backtest: {
-                    image: 'ten-k/assets/nvidia-relations.webp',
-                    title: '실제 구현 화면 — NVIDIA 관계도와 TSMC 공급·협력 근거',
-                    caption: '2024년 제출 10-K를 분석한 웹앱의 실제 캡처입니다. 관계 그래프에서 기업을 선택하면 관계 유형, 판정 정보와 공시 근거 문장을 함께 확인합니다.',
-                    source: 'ten-k/assets/nvidia-relations.webp'
+                    image: 'ten-k/assets/apple-supply-relations.webp',
+                    title: '실제 구현 화면 — Apple에서 찾은 Skyworks 공급·협력 관계',
+                    caption: 'Apple의 공급·협력 관계에서 Skyworks를 선택한 실제 화면입니다. Skyworks의 2024년 제출 10-K가 Apple을 고객으로 언급한 문장을 보여줍니다.',
+                    source: 'ten-k/assets/apple-supply-relations.webp'
                 },
                 highlightsTitle: '구현 결과와 활용',
                 highlights: [
